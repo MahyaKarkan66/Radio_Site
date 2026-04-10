@@ -22,6 +22,8 @@
       padding: 20px;
       border-right: 1px solid rgba(255,255,255,0.08);
       flex-shrink: 0;
+      transition: transform 0.3s ease;
+      z-index: 1000;
     }
 
     .logo {
@@ -55,6 +57,7 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
+      min-width: 0;
     }
 
     .section {
@@ -238,13 +241,67 @@
       font-size: 13px;
     }
 
+    .topbar {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding: 10px 0;
+    }
+
+    .hamburger {
+      font-size: 28px;
+      background: rgba(255,255,255,0.08);
+      border: none;
+      color: white;
+      border-radius: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .topbar-title {
+      font-size: 22px;
+      font-weight: bold;
+      color: #ff6b57;
+    }
+
+    .overlay {
+      display: none;
+    }
+
     @media (max-width: 760px) {
       body {
-        flex-direction: column;
+        display: block;
+      }
+
+      .topbar {
+        display: flex;
       }
 
       .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        transform: translateX(-100%);
+        box-shadow: 8px 0 30px rgba(0,0,0,0.4);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .overlay.show {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.45);
+        z-index: 999;
+      }
+
+      .main {
         width: 100%;
+        min-height: 100vh;
       }
 
       .hero h1 {
@@ -254,21 +311,28 @@
   </style>
 </head>
 <body>
-  <div class="sidebar">
+
+  <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+  <div class="sidebar" id="sidebar">
     <div class="logo">🎧 CJSF</div>
 
-    <div class="menu-item active" onclick="showSection('home', this)">Home</div>
-    <div class="menu-item" onclick="showSection('audio', this)">Audio</div>
-    <div class="menu-item" onclick="showSection('news', this)">News</div>
-    <div class="menu-item" onclick="showSection('archive', this)">Archive</div>
-    <div class="menu-item" onclick="showSection('upload', this)">Upload</div>
-    <div class="menu-item" onclick="showSection('detail', this)">Detail</div>
+    <div class="menu-item active" onclick="handleMenuClick('home', this)">Home</div>
+    <div class="menu-item" onclick="handleMenuClick('audio', this)">Audio</div>
+    <div class="menu-item" onclick="handleMenuClick('news', this)">News</div>
+    <div class="menu-item" onclick="handleMenuClick('archive', this)">Archive</div>
+    <div class="menu-item" onclick="handleMenuClick('upload', this)">Upload</div>
+    <div class="menu-item" onclick="handleMenuClick('detail', this)">Detail</div>
   </div>
 
   <div class="main">
+    <div class="topbar">
+      <button class="hamburger" onclick="toggleSidebar()">☰</button>
+      <div class="topbar-title">CJSF</div>
+    </div>
+
     <div class="section">
 
-      <!-- HOME -->
       <div id="homeSection">
         <div class="hero">
           <h1>CJSF Audio & Content</h1>
@@ -327,7 +391,6 @@
         </div>
       </div>
 
-      <!-- AUDIO -->
       <div id="audioSection" class="hidden">
         <div class="hero">
           <h1>Audio</h1>
@@ -389,7 +452,6 @@
         </div>
       </div>
 
-      <!-- NEWS -->
       <div id="newsSection" class="hidden">
         <div class="hero">
           <h1>News & Text Posts</h1>
@@ -419,7 +481,6 @@
         </div>
       </div>
 
-      <!-- ARCHIVE -->
       <div id="archiveSection" class="hidden">
         <div class="hero">
           <h1>Archive</h1>
@@ -441,7 +502,6 @@
         </div>
       </div>
 
-      <!-- UPLOAD -->
       <div id="uploadSection" class="hidden">
         <div class="hero">
           <h1>Upload Content</h1>
@@ -546,7 +606,6 @@
         </div>
       </div>
 
-      <!-- DETAIL -->
       <div id="detailSection" class="hidden">
         <div class="hero">
           <h1>Audio Detail</h1>
@@ -575,7 +634,6 @@
         </div>
       </div>
 
-      <!-- PLAYER -->
       <div class="player">
         <div id="nowPlaying">CJSF — Select audio</div>
         <audio id="audioPlayer" controls></audio>
@@ -601,6 +659,21 @@
         document.querySelectorAll(".menu-item").forEach(item => item.classList.remove("active"));
         clicked.classList.add("active");
       }
+    }
+
+    function handleMenuClick(section, clicked) {
+      showSection(section, clicked);
+      closeSidebar();
+    }
+
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("open");
+      document.getElementById("overlay").classList.toggle("show");
+    }
+
+    function closeSidebar() {
+      document.getElementById("sidebar").classList.remove("open");
+      document.getElementById("overlay").classList.remove("show");
     }
 
     function playAudio(title, src) {
@@ -641,6 +714,7 @@
 
       document.querySelectorAll(".menu-item").forEach(item => item.classList.remove("active"));
       showSection("detail");
+      closeSidebar();
     }
 
     function playDetailAudio() {
