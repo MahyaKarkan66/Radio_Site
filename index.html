@@ -26,6 +26,7 @@ color:white;
 width:220px;
 background:#0b0b0b;
 padding:20px;
+z-index:2;
 }
 
 .sidebar h2{
@@ -55,9 +56,11 @@ color:white;
 flex:1;
 padding:24px;
 background:
-radial-gradient(circle at top left,#2b0f0f,transparent 40%),
-radial-gradient(circle at bottom right,#111827,transparent 40%),
-#000;
+linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.9)),
+url("https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1974&auto=format&fit=crop");
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
 }
 
 .section{
@@ -89,30 +92,30 @@ font-weight:bold;
 /* cards */
 
 .card{
-background:rgba(255,255,255,0.08);
+background:rgba(0,0,0,0.45);
 padding:18px;
 margin:14px 0;
 border-radius:14px;
 cursor:pointer;
 transition:0.2s;
 font-size:18px;
-backdrop-filter:blur(10px);
+backdrop-filter:blur(8px);
 }
 
 .card:hover{
-background:rgba(255,255,255,0.14);
+background:rgba(0,0,0,0.6);
 transform:translateY(-2px);
 }
 
 /* events */
 
 .event-card{
-background:rgba(255,255,255,0.06);
+background:rgba(0,0,0,0.45);
 padding:18px;
 margin:14px 0;
 border-radius:14px;
 border-left:3px solid #ff7a59;
-backdrop-filter:blur(10px);
+backdrop-filter:blur(8px);
 }
 
 /* player */
@@ -121,10 +124,10 @@ backdrop-filter:blur(10px);
 position:sticky;
 bottom:20px;
 margin-top:30px;
-background:rgba(18,18,18,0.9);
+background:rgba(0,0,0,0.75);
 padding:14px;
 border-radius:16px;
-box-shadow:0 10px 30px rgba(0,0,0,0.4);
+box-shadow:0 10px 30px rgba(0,0,0,0.5);
 backdrop-filter:blur(10px);
 }
 
@@ -143,6 +146,10 @@ flex-direction:column;
 
 .sidebar{
 width:100%;
+}
+
+.main{
+background-attachment:scroll;
 }
 
 }
