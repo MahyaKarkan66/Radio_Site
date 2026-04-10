@@ -3,21 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CJSF Web App Prototype</title>
+  <title>CJSF Web App</title>
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: #0b0b0b;
       color: #fff;
-      display: flex;
       min-height: 100vh;
+      display: flex;
     }
 
     .sidebar {
-      width: 240px;
+      width: 230px;
       background: #111;
       padding: 20px;
       border-right: 1px solid rgba(255,255,255,0.08);
@@ -30,7 +32,7 @@
       font-size: 24px;
       font-weight: bold;
       color: #ff6b57;
-      margin-bottom: 28px;
+      margin-bottom: 26px;
     }
 
     .menu-item {
@@ -50,6 +52,7 @@
 
     .main {
       flex: 1;
+      min-width: 0;
       padding: 24px;
       background:
         linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.9)),
@@ -57,7 +60,33 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      min-width: 0;
+    }
+
+    .topbar {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .hamburger {
+      font-size: 28px;
+      background: rgba(255,255,255,0.08);
+      border: none;
+      color: white;
+      border-radius: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .topbar-title {
+      font-size: 22px;
+      font-weight: bold;
+      color: #ff6b57;
+    }
+
+    .overlay {
+      display: none;
     }
 
     .section {
@@ -68,22 +97,23 @@
       display: none;
     }
 
-    h1, h2, h3 {
-      margin-top: 0;
-    }
-
-    p {
-      color: #e5e5e5;
-      line-height: 1.6;
-    }
-
     .hero {
-      margin-bottom: 24px;
+      margin-bottom: 28px;
     }
 
     .hero h1 {
       font-size: 42px;
       margin-bottom: 10px;
+    }
+
+    .hero p {
+      color: #e5e5e5;
+      line-height: 1.6;
+      max-width: 760px;
+    }
+
+    h2, h3 {
+      margin-top: 0;
     }
 
     .grid {
@@ -93,7 +123,7 @@
     }
 
     .card {
-      background: rgba(0,0,0,0.55);
+      background: rgba(0,0,0,0.56);
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 16px;
       padding: 16px;
@@ -102,8 +132,8 @@
     }
 
     .card:hover {
-      transform: translateY(-2px);
       background: rgba(0,0,0,0.68);
+      transform: translateY(-2px);
     }
 
     .card img {
@@ -132,8 +162,8 @@
     .meta {
       font-size: 13px;
       color: #c9c9c9;
-      margin-top: 10px;
       line-height: 1.5;
+      margin-top: 10px;
     }
 
     .button {
@@ -172,11 +202,20 @@
       background: #ff6b57;
     }
 
+    .list-card {
+      background: rgba(0,0,0,0.56);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 14px;
+      backdrop-filter: blur(8px);
+    }
+
     .player {
       position: sticky;
       bottom: 16px;
       margin-top: 30px;
-      background: rgba(10,10,10,0.88);
+      background: rgba(10,10,10,0.9);
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 16px;
       padding: 14px;
@@ -188,85 +227,48 @@
       margin-top: 10px;
     }
 
-    .detail-card {
-      background: rgba(0,0,0,0.62);
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 1200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 760px;
+      background: #121212;
       border-radius: 18px;
       padding: 18px;
       border: 1px solid rgba(255,255,255,0.08);
-      backdrop-filter: blur(8px);
+      max-height: 90vh;
+      overflow: auto;
     }
 
-    .detail-card img {
+    .modal-card img {
       width: 100%;
-      max-height: 350px;
+      max-height: 320px;
       object-fit: cover;
       border-radius: 14px;
-      margin-bottom: 16px;
-    }
-
-    .form-wrap {
-      background: rgba(0,0,0,0.6);
-      padding: 18px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.08);
-      max-width: 760px;
-    }
-
-    .form-group {
       margin-bottom: 14px;
     }
 
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-
-    input, textarea, select {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
-      color: white;
-    }
-
-    textarea {
-      min-height: 110px;
-      resize: vertical;
-    }
-
-    .small-note {
-      color: #cfcfcf;
-      font-size: 13px;
-    }
-
-    .topbar {
-      display: none;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-      padding: 10px 0;
-    }
-
-    .hamburger {
-      font-size: 28px;
+    .close-btn {
+      float: right;
       background: rgba(255,255,255,0.08);
-      border: none;
       color: white;
+      border: none;
       border-radius: 10px;
       padding: 8px 12px;
       cursor: pointer;
-    }
-
-    .topbar-title {
-      font-size: 22px;
-      font-weight: bold;
-      color: #ff6b57;
-    }
-
-    .overlay {
-      display: none;
     }
 
     @media (max-width: 760px) {
@@ -321,8 +323,6 @@
     <div class="menu-item" onclick="handleMenuClick('audio', this)">Audio</div>
     <div class="menu-item" onclick="handleMenuClick('news', this)">News</div>
     <div class="menu-item" onclick="handleMenuClick('archive', this)">Archive</div>
-    <div class="menu-item" onclick="handleMenuClick('upload', this)">Upload</div>
-    <div class="menu-item" onclick="handleMenuClick('detail', this)">Detail</div>
   </div>
 
   <div class="main">
@@ -333,68 +333,56 @@
 
     <div class="section">
 
+      <!-- HOME -->
       <div id="homeSection">
         <div class="hero">
           <h1>CJSF Audio & Content</h1>
-          <p>Discover featured audio, interviews, performances, reviews, and the latest community content in one place.</p>
+          <p>Discover featured audio, interviews, performances, and community content in one streamlined web app experience.</p>
         </div>
 
         <h2>Featured Audio</h2>
         <div class="grid">
           <div class="card">
-            <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop" alt="Featured audio">
+            <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop" alt="">
             <h3>Local Music Interview</h3>
-            <p>A featured artist interview from the Music category, highlighted on the homepage.</p>
+            <p>A featured artist interview highlighted on the homepage.</p>
             <div class="tag-row">
               <span class="tag">Music</span>
               <span class="tag">Interview</span>
               <span class="tag">Local</span>
             </div>
-            <div class="meta">
-              Author: A&E Team<br>
-              Guests: Indie Artist Collective<br>
-              First Aired On: Morning Mix
-            </div>
-            <button class="button" onclick="openDetail('Local Music Interview','Music','Interview','A featured artist interview from the Music category, highlighted on the homepage.','A&E Team','Indie Artist Collective','Morning Mix','April 3, 2026','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3','https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop')">Open Detail</button>
+            <button class="button" onclick="openDetail('Local Music Interview','Music','Interview','A featured artist interview highlighted on the homepage.','A&E Team','Indie Artist Collective','Morning Mix','April 3, 2026','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3','https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop')">View</button>
           </div>
 
           <div class="card">
-            <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1200&auto=format&fit=crop" alt="Performance">
+            <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1200&auto=format&fit=crop" alt="">
             <h3>Live Comedy Segment</h3>
-            <p>A short featured performance clip that can be easily discovered and shared.</p>
+            <p>A short audio feature that is easy to discover and share.</p>
             <div class="tag-row">
               <span class="tag">Comedy</span>
               <span class="tag">Performance</span>
             </div>
-            <div class="meta">
-              Author: Station Team<br>
-              First Aired On: Late Night Hour
-            </div>
-            <button class="button" onclick="openDetail('Live Comedy Segment','Comedy','Performance','A short featured performance clip that can be easily discovered and shared.','Station Team','Guest Comedian','Late Night Hour','April 6, 2026','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3','https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1200&auto=format&fit=crop')">Open Detail</button>
+            <button class="button" onclick="openDetail('Live Comedy Segment','Comedy','Performance','A short audio feature that is easy to discover and share.','Station Team','Guest Comedian','Late Night Hour','April 6, 2026','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3','https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1200&auto=format&fit=crop')">View</button>
           </div>
 
           <div class="card">
-            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1200&auto=format&fit=crop" alt="Public affairs">
+            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1200&auto=format&fit=crop" alt="">
             <h3>Tech & Public Affairs Talk</h3>
-            <p>An audio post organized by topic instead of only by date.</p>
+            <p>Audio organized by topic instead of just by upload date.</p>
             <div class="tag-row">
               <span class="tag">Technology</span>
-              <span class="tag">Public Affairs</span>
               <span class="tag">Segment</span>
             </div>
-            <div class="meta">
-              Author: News Desk<br>
-              First Aired On: Civic Signal
-            </div>
-            <button class="button" onclick="openDetail('Tech & Public Affairs Talk','Technology / Public Affairs','Segment','An audio post organized by topic instead of only by date.','News Desk','Campus Speaker','Civic Signal','April 8, 2026','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3','https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1200&auto=format&fit=crop')">Open Detail</button>
+            <button class="button" onclick="openDetail('Tech & Public Affairs Talk','Technology','Segment','Audio organized by topic instead of just by upload date.','News Desk','Campus Speaker','Civic Signal','April 8, 2026','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3','https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1200&auto=format&fit=crop')">View</button>
           </div>
         </div>
       </div>
 
+      <!-- AUDIO -->
       <div id="audioSection" class="hidden">
         <div class="hero">
           <h1>Audio</h1>
-          <p>Browse audio posts by topic and audio type.</p>
+          <p>Browse audio posts by topic.</p>
         </div>
 
         <div class="filters">
@@ -405,7 +393,7 @@
           <button class="filter-btn" onclick="filterAudio('politics', this)">Politics</button>
         </div>
 
-        <div class="grid" id="audioGrid">
+        <div class="grid">
           <div class="card audio-item" data-topic="music">
             <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=1200&auto=format&fit=crop" alt="">
             <h3>Artist Interview</h3>
@@ -414,29 +402,29 @@
               <span class="tag">Music</span>
               <span class="tag">Interview</span>
             </div>
-            <button class="button" onclick="playAudio('Artist Interview','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')">Play</button>
+            <button class="button secondary" onclick="playAudio('Artist Interview','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')">Play</button>
           </div>
 
           <div class="card audio-item" data-topic="arts">
             <img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=80&w=1200&auto=format&fit=crop" alt="">
             <h3>Theatre Performance Clip</h3>
-            <p>A short performance audio clip from the arts section.</p>
+            <p>A short performance clip from the arts section.</p>
             <div class="tag-row">
               <span class="tag">Arts</span>
               <span class="tag">Performance</span>
             </div>
-            <button class="button" onclick="playAudio('Theatre Performance Clip','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3')">Play</button>
+            <button class="button secondary" onclick="playAudio('Theatre Performance Clip','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3')">Play</button>
           </div>
 
           <div class="card audio-item" data-topic="technology">
             <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="">
             <h3>Campus Tech Talk</h3>
-            <p>A technology segment with searchable topic tagging.</p>
+            <p>A segment with searchable topic tagging.</p>
             <div class="tag-row">
               <span class="tag">Technology</span>
               <span class="tag">Segment</span>
             </div>
-            <button class="button" onclick="playAudio('Campus Tech Talk','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3')">Play</button>
+            <button class="button secondary" onclick="playAudio('Campus Tech Talk','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3')">Play</button>
           </div>
 
           <div class="card audio-item" data-topic="politics">
@@ -447,190 +435,57 @@
               <span class="tag">Politics</span>
               <span class="tag">Public Affairs</span>
             </div>
-            <button class="button" onclick="playAudio('Local Affairs Roundtable','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')">Play</button>
+            <button class="button secondary" onclick="playAudio('Local Affairs Roundtable','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')">Play</button>
           </div>
         </div>
       </div>
 
+      <!-- NEWS -->
       <div id="newsSection" class="hidden">
         <div class="hero">
-          <h1>News & Text Posts</h1>
-          <p>This section can support text-only or image-based posts in the same system.</p>
+          <h1>News</h1>
+          <p>Text and image-based posts can live in the same content system as audio.</p>
         </div>
 
-        <div class="grid">
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=1200&auto=format&fit=crop" alt="">
-            <h3>Film Review</h3>
-            <p>A text-based review post with image support for A&amp;E content.</p>
-            <div class="tag-row">
-              <span class="tag">Film & TV</span>
-              <span class="tag">Review</span>
-            </div>
-          </div>
+        <div class="list-card">
+          <h3>Film Review</h3>
+          <p>A text-based review post with image support for A&amp;E content.</p>
+        </div>
 
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=1200&auto=format&fit=crop" alt="">
-            <h3>Campus News Update</h3>
-            <p>A discoverable news post that can live beside audio content in one system.</p>
-            <div class="tag-row">
-              <span class="tag">SFU</span>
-              <span class="tag">News</span>
-            </div>
-          </div>
+        <div class="list-card">
+          <h3>Campus News Update</h3>
+          <p>A discoverable news post that can sit alongside audio content.</p>
+        </div>
+
+        <div class="list-card">
+          <h3>Community Headlines</h3>
+          <p>Important local and campus updates highlighted in a simple, readable format.</p>
         </div>
       </div>
 
+      <!-- ARCHIVE -->
       <div id="archiveSection" class="hidden">
         <div class="hero">
           <h1>Archive</h1>
           <p>Browse older audio content by date.</p>
         </div>
 
-        <div class="grid">
-          <div class="card">
-            <h3>April 2026 Archive</h3>
-            <p>Most recent interviews, performances, and segments.</p>
-            <button class="button secondary" onclick="playAudio('April 2026 Archive Sample','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3')">Play Sample</button>
-          </div>
-
-          <div class="card">
-            <h3>March 2026 Archive</h3>
-            <p>Older audio content sorted by date.</p>
-            <button class="button secondary" onclick="playAudio('March 2026 Archive Sample','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3')">Play Sample</button>
-          </div>
-        </div>
-      </div>
-
-      <div id="uploadSection" class="hidden">
-        <div class="hero">
-          <h1>Upload Content</h1>
-          <p>Prototype form for audio posts or text/image posts.</p>
+        <div class="list-card">
+          <h3>April 2026</h3>
+          <p>Recent interviews, performances, and segments.</p>
+          <button class="button secondary" onclick="playAudio('April 2026 Archive Sample','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3')">Play Sample</button>
         </div>
 
-        <div class="form-wrap">
-          <div class="form-group">
-            <label>Post Type</label>
-            <select>
-              <option>Audio Post</option>
-              <option>Text / Image Post</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>Title</label>
-            <input type="text" placeholder="Enter title">
-          </div>
-
-          <div class="form-group">
-            <label>Short Description</label>
-            <input type="text" placeholder="Short summary">
-          </div>
-
-          <div class="form-group">
-            <label>Description / Body Content</label>
-            <textarea placeholder="Full body content"></textarea>
-          </div>
-
-          <div class="form-group">
-            <label>Audio File</label>
-            <input type="file">
-          </div>
-
-          <div class="form-group">
-            <label>Image</label>
-            <input type="file">
-          </div>
-
-          <div class="form-group">
-            <label>Author</label>
-            <input type="text" placeholder="Author name">
-          </div>
-
-          <div class="form-group">
-            <label>Guests</label>
-            <input type="text" placeholder="Guest names">
-          </div>
-
-          <div class="form-group">
-            <label>Originating Show / First Aired On</label>
-            <input type="text" placeholder="Show name">
-          </div>
-
-          <div class="form-group">
-            <label>First Air Date</label>
-            <input type="date">
-          </div>
-
-          <div class="form-group">
-            <label>Upload Date</label>
-            <input type="date">
-          </div>
-
-          <div class="form-group">
-            <label>Topic</label>
-            <select>
-              <option>Music</option>
-              <option>Arts</option>
-              <option>Theatre</option>
-              <option>Comedy</option>
-              <option>Film & TV</option>
-              <option>Public Affairs</option>
-              <option>Politics</option>
-              <option>Local</option>
-              <option>Provincial</option>
-              <option>National</option>
-              <option>International</option>
-              <option>SFU</option>
-              <option>Sports</option>
-              <option>Technology</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>Audio Type</label>
-            <select>
-              <option>Interview</option>
-              <option>Performance</option>
-              <option>Segment</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>Keywords</label>
-            <input type="text" placeholder="Ex: local music, interview, sfu">
-          </div>
-
-          <button class="button" type="button" onclick="alert('Demo only — backend upload not connected yet.')">Save Content</button>
-          <p class="small-note">This is only a UI prototype. Real upload needs backend or CMS integration.</p>
-        </div>
-      </div>
-
-      <div id="detailSection" class="hidden">
-        <div class="hero">
-          <h1>Audio Detail</h1>
-          <p>Full post information with media player.</p>
+        <div class="list-card">
+          <h3>March 2026</h3>
+          <p>Older content sorted by most recent uploads.</p>
+          <button class="button secondary" onclick="playAudio('March 2026 Archive Sample','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3')">Play Sample</button>
         </div>
 
-        <div class="detail-card">
-          <img id="detailImage" src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop" alt="">
-          <h2 id="detailTitle">Audio Post Title</h2>
-
-          <div class="tag-row">
-            <span class="tag" id="detailTopic">Music</span>
-            <span class="tag" id="detailType">Interview</span>
-          </div>
-
-          <p id="detailDescription">This is where the full description or body content would appear.</p>
-
-          <div class="meta">
-            <strong>Author:</strong> <span id="detailAuthor">A&E Team</span><br>
-            <strong>Guests:</strong> <span id="detailGuests">Guest Name</span><br>
-            <strong>Originating Show:</strong> <span id="detailShow">Morning Mix</span><br>
-            <strong>First Air Date:</strong> <span id="detailAirDate">April 3, 2026</span>
-          </div>
-
-          <button class="button" onclick="playDetailAudio()">Play Audio</button>
+        <div class="list-card">
+          <h3>February 2026</h3>
+          <p>Archived segments and community audio posts.</p>
+          <button class="button secondary" onclick="playAudio('February 2026 Archive Sample','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')">Play Sample</button>
         </div>
       </div>
 
@@ -642,6 +497,31 @@
     </div>
   </div>
 
+  <!-- DETAIL MODAL -->
+  <div class="modal" id="detailModal" onclick="closeDetailOnOverlay(event)">
+    <div class="modal-card">
+      <button class="close-btn" onclick="closeDetail()">Close</button>
+      <img id="detailImage" src="" alt="">
+      <h2 id="detailTitle">Audio Title</h2>
+
+      <div class="tag-row">
+        <span class="tag" id="detailTopic">Topic</span>
+        <span class="tag" id="detailType">Type</span>
+      </div>
+
+      <p id="detailDescription">Description goes here.</p>
+
+      <div class="meta">
+        <strong>Author:</strong> <span id="detailAuthor"></span><br>
+        <strong>Guests:</strong> <span id="detailGuests"></span><br>
+        <strong>Originating Show:</strong> <span id="detailShow"></span><br>
+        <strong>First Air Date:</strong> <span id="detailAirDate"></span>
+      </div>
+
+      <button class="button" onclick="playDetailAudio()">Play Audio</button>
+    </div>
+  </div>
+
   <script>
     let currentDetailAudio = "";
 
@@ -650,8 +530,6 @@
       document.getElementById("audioSection").classList.add("hidden");
       document.getElementById("newsSection").classList.add("hidden");
       document.getElementById("archiveSection").classList.add("hidden");
-      document.getElementById("uploadSection").classList.add("hidden");
-      document.getElementById("detailSection").classList.add("hidden");
 
       document.getElementById(section + "Section").classList.remove("hidden");
 
@@ -689,11 +567,7 @@
     function filterAudio(topic, clicked) {
       const items = document.querySelectorAll(".audio-item");
       items.forEach(item => {
-        if (topic === "all" || item.dataset.topic === topic) {
-          item.style.display = "block";
-        } else {
-          item.style.display = "none";
-        }
+        item.style.display = (topic === "all" || item.dataset.topic === topic) ? "block" : "none";
       });
 
       document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
@@ -711,18 +585,23 @@
       document.getElementById("detailAirDate").innerText = airDate;
       document.getElementById("detailImage").src = imageSrc;
       currentDetailAudio = audioSrc;
+      document.getElementById("detailModal").classList.add("show");
+    }
 
-      document.querySelectorAll(".menu-item").forEach(item => item.classList.remove("active"));
-      showSection("detail");
-      closeSidebar();
+    function closeDetail() {
+      document.getElementById("detailModal").classList.remove("show");
+    }
+
+    function closeDetailOnOverlay(event) {
+      if (event.target.id === "detailModal") {
+        closeDetail();
+      }
     }
 
     function playDetailAudio() {
-      if (!currentDetailAudio) {
-        alert("No audio selected.");
-        return;
-      }
+      if (!currentDetailAudio) return;
       playAudio(document.getElementById("detailTitle").innerText, currentDetailAudio);
+      closeDetail();
     }
   </script>
 </body>
