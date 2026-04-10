@@ -6,52 +6,79 @@
 <title>CJSF 90.1 FM</title>
 
 <style>
-* { box-sizing: border-box; }
 
-body {
+*{
+box-sizing:border-box;
+}
+
+body{
 margin:0;
-font-family:Arial;
+font-family:Arial, sans-serif;
 display:flex;
 min-height:100vh;
 background:#000;
+color:white;
 }
+
+/* sidebar */
 
 .sidebar{
 width:220px;
 background:#0b0b0b;
-color:white;
 padding:20px;
 }
 
 .sidebar h2{
 color:#ff6b57;
 margin-top:0;
+margin-bottom:30px;
 }
 
 .menu-item{
-margin:14px 0;
-color:#d9d9d9;
+margin:12px 0;
+padding:12px;
+border-radius:10px;
+cursor:pointer;
+color:#cfcfcf;
+transition:0.2s;
 }
+
+.menu-item:hover,
+.menu-item.active{
+background:rgba(255,255,255,0.08);
+color:white;
+}
+
+/* main */
 
 .main{
 flex:1;
 padding:24px;
-background:linear-gradient(135deg,#1c1c1c,#3d1f1f,#111827);
+background:
+radial-gradient(circle at top left,#2b0f0f,transparent 40%),
+radial-gradient(circle at bottom right,#111827,transparent 40%),
+#000;
 }
 
 .section{
 max-width:760px;
-color:white;
 }
+
+.hidden{
+display:none;
+}
+
+/* hero */
 
 .hero{
 display:flex;
 align-items:center;
 gap:10px;
-margin-bottom:10px;
+margin-bottom:14px;
+flex-wrap:wrap;
 }
 
-.live{
+.live-badge{
 background:#ff3b30;
 padding:6px 10px;
 border-radius:20px;
@@ -59,44 +86,67 @@ font-size:12px;
 font-weight:bold;
 }
 
+/* cards */
+
 .card{
-background:rgba(255,255,255,0.12);
-padding:16px;
-margin:12px 0;
+background:rgba(255,255,255,0.08);
+padding:18px;
+margin:14px 0;
 border-radius:14px;
 cursor:pointer;
+transition:0.2s;
+font-size:18px;
+backdrop-filter:blur(10px);
 }
 
 .card:hover{
-background:rgba(255,255,255,0.18);
+background:rgba(255,255,255,0.14);
+transform:translateY(-2px);
 }
 
+/* events */
+
 .event-card{
-background:rgba(255,255,255,0.08);
-padding:16px;
-margin:12px 0;
+background:rgba(255,255,255,0.06);
+padding:18px;
+margin:14px 0;
 border-radius:14px;
-border-left:4px solid #ff7a59;
+border-left:3px solid #ff7a59;
+backdrop-filter:blur(10px);
 }
+
+/* player */
 
 .player{
 position:sticky;
 bottom:20px;
-margin-top:40px;
-background:#121212;
-padding:12px;
-border-radius:14px;
+margin-top:30px;
+background:rgba(18,18,18,0.9);
+padding:14px;
+border-radius:16px;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+backdrop-filter:blur(10px);
 }
 
 #audioPlayer{
 width:100%;
-margin-top:8px;
+margin-top:10px;
 }
 
+/* mobile */
+
 @media(max-width:700px){
-body{flex-direction:column}
-.sidebar{width:100%}
+
+body{
+flex-direction:column;
 }
+
+.sidebar{
+width:100%;
+}
+
+}
+
 </style>
 </head>
 
@@ -104,29 +154,71 @@ body{flex-direction:column}
 
 <div class="sidebar">
 <h2>🎧 CJSF Radio</h2>
-<div class="menu-item">Home</div>
-<div class="menu-item">Live</div>
-<div class="menu-item">Podcasts</div>
-<div class="menu-item">Events</div>
+
+<div class="menu-item active" onclick="showSection('home', this)">
+Home
+</div>
+
+<div class="menu-item" onclick="showSection('live', this)">
+Live
+</div>
+
+<div class="menu-item" onclick="showSection('events', this)">
+Events
+</div>
+
 </div>
 
 <div class="main">
 <div class="section">
 
+<!-- HOME -->
+<div id="homeSection">
+
 <div class="hero">
-<div class="live">LIVE</div>
 <h1>📻 CJSF 90.1 FM</h1>
 </div>
 
-<p>Community radio with live shows, music, podcasts, and upcoming events.</p>
+<p>Listen to stations and explore CJSF radio.</p>
 
-<div class="card" onclick="playLive()">🔴 CJSF LIVE</div>
+<div class="card" onclick="playStation('chill')">
+Chill FM
+</div>
 
-<div class="card" onclick="playStation('chill')">Chill FM</div>
-<div class="card" onclick="playStation('rock')">Rock Station</div>
-<div class="card" onclick="playStation('news')">News Radio</div>
+<div class="card" onclick="playStation('rock')">
+Rock Station
+</div>
 
-<h2>Upcoming Events</h2>
+<div class="card" onclick="playStation('news')">
+News Radio
+</div>
+
+</div>
+
+
+<!-- LIVE -->
+<div id="liveSection" class="hidden">
+
+<div class="hero">
+<div class="live-badge">LIVE</div>
+<h1>CJSF Live Radio</h1>
+</div>
+
+<p>Listen to CJSF live broadcast.</p>
+
+<div class="card" onclick="playLive()">
+▶ Play CJSF 90.1 FM Live
+</div>
+
+</div>
+
+
+<!-- EVENTS -->
+<div id="eventsSection" class="hidden">
+
+<div class="hero">
+<h1>Upcoming Events</h1>
+</div>
 
 <div class="event-card">
 <h3>Friday Night Jazz</h3>
@@ -142,17 +234,49 @@ body{flex-direction:column}
 <p>Weekly news and discussion.</p>
 </div>
 
+</div>
+
+
+<!-- PLAYER -->
 <div class="player">
-<div id="nowPlaying">CJSF Live — Select a station</div>
+<div id="nowPlaying">CJSF — Select audio</div>
 <audio id="audioPlayer" controls></audio>
 </div>
 
 </div>
 </div>
 
+
 <script>
 
+function showSection(section,clicked){
+
+document.getElementById("homeSection").classList.add("hidden");
+document.getElementById("liveSection").classList.add("hidden");
+document.getElementById("eventsSection").classList.add("hidden");
+
+document.querySelectorAll(".menu-item").forEach(item=>{
+item.classList.remove("active");
+});
+
+if(section==="home"){
+document.getElementById("homeSection").classList.remove("hidden");
+}
+
+if(section==="live"){
+document.getElementById("liveSection").classList.remove("hidden");
+}
+
+if(section==="events"){
+document.getElementById("eventsSection").classList.remove("hidden");
+}
+
+clicked.classList.add("active");
+}
+
+
 function playLive(){
+
 let player=document.getElementById("audioPlayer");
 let nowPlaying=document.getElementById("nowPlaying");
 
@@ -161,6 +285,7 @@ nowPlaying.innerText="🔴 CJSF 90.1 FM LIVE";
 
 player.play();
 }
+
 
 function playStation(station){
 
