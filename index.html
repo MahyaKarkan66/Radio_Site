@@ -1,139 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CJSF 90.1 FM</title>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CJSF Web App Prototype</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       font-family: Arial, sans-serif;
+      background: #0b0b0b;
+      color: #fff;
       display: flex;
       min-height: 100vh;
-      background: #000;
-      color: white;
     }
 
     .sidebar {
-      width: 220px;
-      background: #0b0b0b;
+      width: 240px;
+      background: #111;
       padding: 20px;
+      border-right: 1px solid rgba(255,255,255,0.08);
       flex-shrink: 0;
     }
 
-    .sidebar h2 {
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
       color: #ff6b57;
-      margin-top: 0;
-      margin-bottom: 30px;
+      margin-bottom: 28px;
     }
 
     .menu-item {
-      margin: 12px 0;
-      padding: 12px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
       border-radius: 10px;
+      color: #d7d7d7;
       cursor: pointer;
-      color: #cfcfcf;
       transition: 0.2s;
     }
 
     .menu-item:hover,
     .menu-item.active {
       background: rgba(255,255,255,0.08);
-      color: white;
+      color: #fff;
     }
 
     .main {
       flex: 1;
       padding: 24px;
       background:
-        linear-gradient(rgba(0,0,0,.78), rgba(0,0,0,.9)),
-        url("https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1974&auto=format&fit=crop");
+        linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.9)),
+        url("https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1600&auto=format&fit=crop");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
     }
 
     .section {
-      max-width: 760px;
+      max-width: 1100px;
     }
 
     .hidden {
       display: none;
     }
 
+    h1, h2, h3 {
+      margin-top: 0;
+    }
+
+    p {
+      color: #e5e5e5;
+      line-height: 1.6;
+    }
+
     .hero {
-      margin-bottom: 18px;
+      margin-bottom: 24px;
     }
 
     .hero h1 {
+      font-size: 42px;
       margin-bottom: 10px;
-      font-size: 48px;
     }
 
-    .hero p {
-      font-size: 20px;
-      color: #e5e5e5;
-      line-height: 1.5;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
     }
 
     .card {
-      background: rgba(0,0,0,.5);
-      padding: 18px;
-      margin: 14px 0;
-      border-radius: 14px;
-      cursor: pointer;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 16px;
       backdrop-filter: blur(8px);
       transition: 0.2s;
-      font-size: 18px;
     }
 
     .card:hover {
-      background: rgba(0,0,0,.68);
       transform: translateY(-2px);
+      background: rgba(0,0,0,0.68);
     }
 
-    .event-card,
-    .news-card,
-    .archive-card {
-      background: rgba(0,0,0,.5);
-      padding: 18px;
-      margin: 14px 0;
-      border-radius: 14px;
-      backdrop-filter: blur(8px);
+    .card img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 12px;
     }
 
-    .event-card {
-      border-left: 3px solid #ff7a59;
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 12px;
     }
 
-    .news-card {
-      border-left: 3px solid #5ba8ff;
+    .tag {
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      color: #f2f2f2;
     }
 
-    .archive-card {
-      border-left: 3px solid #7dffb3;
+    .meta {
+      font-size: 13px;
+      color: #c9c9c9;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    .button {
+      margin-top: 12px;
+      display: inline-block;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 10px;
+      background: #ff6b57;
+      color: white;
       cursor: pointer;
-      transition: 0.2s;
+      font-size: 14px;
     }
 
-    .archive-card:hover {
-      background: rgba(0,0,0,.68);
+    .button.secondary {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .filter-btn {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+    }
+
+    .filter-btn.active {
+      background: #ff6b57;
     }
 
     .player {
       position: sticky;
-      bottom: 20px;
-      margin-top: 32px;
-      background: rgba(0,0,0,.82);
-      padding: 14px;
+      bottom: 16px;
+      margin-top: 30px;
+      background: rgba(10,10,10,0.88);
+      border: 1px solid rgba(255,255,255,0.08);
       border-radius: 16px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 25px rgba(0,0,0,.35);
+      padding: 14px;
+      backdrop-filter: blur(8px);
     }
 
     #audioPlayer {
@@ -141,17 +185,60 @@
       margin-top: 10px;
     }
 
-    h2 {
-      margin-top: 28px;
-      margin-bottom: 10px;
+    .detail-card {
+      background: rgba(0,0,0,0.62);
+      border-radius: 18px;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(8px);
     }
 
-    p {
-      color: #e3e3e3;
-      line-height: 1.6;
+    .detail-card img {
+      width: 100%;
+      max-height: 350px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-bottom: 16px;
     }
 
-    @media (max-width: 700px) {
+    .form-wrap {
+      background: rgba(0,0,0,0.6);
+      padding: 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      max-width: 760px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      color: white;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .small-note {
+      color: #cfcfcf;
+      font-size: 13px;
+    }
+
+    @media (max-width: 760px) {
       body {
         flex-direction: column;
       }
@@ -161,20 +248,21 @@
       }
 
       .hero h1 {
-        font-size: 38px;
+        font-size: 32px;
       }
     }
   </style>
 </head>
 <body>
-
   <div class="sidebar">
-    <h2>🎧 CJSF Radio</h2>
+    <div class="logo">🎧 CJSF</div>
 
     <div class="menu-item active" onclick="showSection('home', this)">Home</div>
-    <div class="menu-item" onclick="showSection('events', this)">Events</div>
+    <div class="menu-item" onclick="showSection('audio', this)">Audio</div>
     <div class="menu-item" onclick="showSection('news', this)">News</div>
     <div class="menu-item" onclick="showSection('archive', this)">Archive</div>
+    <div class="menu-item" onclick="showSection('upload', this)">Upload</div>
+    <div class="menu-item" onclick="showSection('detail', this)">Detail</div>
   </div>
 
   <div class="main">
@@ -183,74 +271,307 @@
       <!-- HOME -->
       <div id="homeSection">
         <div class="hero">
-          <h1>📻 CJSF 90.1 FM</h1>
-          <p>Listen live and explore podcasts from the CJSF community.</p>
+          <h1>CJSF Audio & Content</h1>
+          <p>Discover featured audio, interviews, performances, reviews, and the latest community content in one place.</p>
         </div>
 
-        <div class="card" onclick="playLive()">
-          🔴 Listen Live
-        </div>
+        <h2>Featured Audio</h2>
+        <div class="grid">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop" alt="Featured audio">
+            <h3>Local Music Interview</h3>
+            <p>A featured artist interview from the Music category, highlighted on the homepage.</p>
+            <div class="tag-row">
+              <span class="tag">Music</span>
+              <span class="tag">Interview</span>
+              <span class="tag">Local</span>
+            </div>
+            <div class="meta">
+              Author: A&E Team<br>
+              Guests: Indie Artist Collective<br>
+              First Aired On: Morning Mix
+            </div>
+            <button class="button" onclick="openDetail('Local Music Interview','Music','Interview','A featured artist interview from the Music category, highlighted on the homepage.','A&E Team','Indie Artist Collective','Morning Mix','April 3, 2026','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3','https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop')">Open Detail</button>
+          </div>
 
-        <div class="card" onclick="playPodcast(1)">
-          🎙️ Featured Podcast
-        </div>
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1200&auto=format&fit=crop" alt="Performance">
+            <h3>Live Comedy Segment</h3>
+            <p>A short featured performance clip that can be easily discovered and shared.</p>
+            <div class="tag-row">
+              <span class="tag">Comedy</span>
+              <span class="tag">Performance</span>
+            </div>
+            <div class="meta">
+              Author: Station Team<br>
+              First Aired On: Late Night Hour
+            </div>
+            <button class="button" onclick="openDetail('Live Comedy Segment','Comedy','Performance','A short featured performance clip that can be easily discovered and shared.','Station Team','Guest Comedian','Late Night Hour','April 6, 2026','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3','https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1200&auto=format&fit=crop')">Open Detail</button>
+          </div>
 
-        <div class="card" onclick="playPodcast(2)">
-          🎧 Latest Podcast Episode
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1200&auto=format&fit=crop" alt="Public affairs">
+            <h3>Tech & Public Affairs Talk</h3>
+            <p>An audio post organized by topic instead of only by date.</p>
+            <div class="tag-row">
+              <span class="tag">Technology</span>
+              <span class="tag">Public Affairs</span>
+              <span class="tag">Segment</span>
+            </div>
+            <div class="meta">
+              Author: News Desk<br>
+              First Aired On: Civic Signal
+            </div>
+            <button class="button" onclick="openDetail('Tech & Public Affairs Talk','Technology / Public Affairs','Segment','An audio post organized by topic instead of only by date.','News Desk','Campus Speaker','Civic Signal','April 8, 2026','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3','https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1200&auto=format&fit=crop')">Open Detail</button>
+          </div>
         </div>
       </div>
 
-      <!-- EVENTS -->
-      <div id="eventsSection" class="hidden">
-        <h1>📅 Events</h1>
-
-        <div class="event-card">
-          <h3>Friday Night Jazz</h3>
-          <p>Date: April 12</p>
-          <p>Time: 8:00 PM</p>
-          <p>Live guest performance at the station.</p>
+      <!-- AUDIO -->
+      <div id="audioSection" class="hidden">
+        <div class="hero">
+          <h1>Audio</h1>
+          <p>Browse audio posts by topic and audio type.</p>
         </div>
 
-        <div class="event-card">
-          <h3>Morning Talk Show</h3>
-          <p>Date: April 14</p>
-          <p>Time: 9:00 AM</p>
-          <p>Weekly discussion and community updates.</p>
+        <div class="filters">
+          <button class="filter-btn active" onclick="filterAudio('all', this)">All</button>
+          <button class="filter-btn" onclick="filterAudio('music', this)">Music</button>
+          <button class="filter-btn" onclick="filterAudio('arts', this)">Arts</button>
+          <button class="filter-btn" onclick="filterAudio('technology', this)">Technology</button>
+          <button class="filter-btn" onclick="filterAudio('politics', this)">Politics</button>
+        </div>
+
+        <div class="grid" id="audioGrid">
+          <div class="card audio-item" data-topic="music">
+            <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=1200&auto=format&fit=crop" alt="">
+            <h3>Artist Interview</h3>
+            <p>Interview with a local artist about a new release.</p>
+            <div class="tag-row">
+              <span class="tag">Music</span>
+              <span class="tag">Interview</span>
+            </div>
+            <button class="button" onclick="playAudio('Artist Interview','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')">Play</button>
+          </div>
+
+          <div class="card audio-item" data-topic="arts">
+            <img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=80&w=1200&auto=format&fit=crop" alt="">
+            <h3>Theatre Performance Clip</h3>
+            <p>A short performance audio clip from the arts section.</p>
+            <div class="tag-row">
+              <span class="tag">Arts</span>
+              <span class="tag">Performance</span>
+            </div>
+            <button class="button" onclick="playAudio('Theatre Performance Clip','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3')">Play</button>
+          </div>
+
+          <div class="card audio-item" data-topic="technology">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="">
+            <h3>Campus Tech Talk</h3>
+            <p>A technology segment with searchable topic tagging.</p>
+            <div class="tag-row">
+              <span class="tag">Technology</span>
+              <span class="tag">Segment</span>
+            </div>
+            <button class="button" onclick="playAudio('Campus Tech Talk','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3')">Play</button>
+          </div>
+
+          <div class="card audio-item" data-topic="politics">
+            <img src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1200&auto=format&fit=crop" alt="">
+            <h3>Local Affairs Roundtable</h3>
+            <p>A public affairs discussion categorized by topic.</p>
+            <div class="tag-row">
+              <span class="tag">Politics</span>
+              <span class="tag">Public Affairs</span>
+            </div>
+            <button class="button" onclick="playAudio('Local Affairs Roundtable','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')">Play</button>
+          </div>
         </div>
       </div>
 
       <!-- NEWS -->
       <div id="newsSection" class="hidden">
-        <h1>📰 News</h1>
-
-        <div class="news-card">
-          <h3>CJSF Spring Programming Update</h3>
-          <p>New community shows and student-led content are coming this month.</p>
+        <div class="hero">
+          <h1>News & Text Posts</h1>
+          <p>This section can support text-only or image-based posts in the same system.</p>
         </div>
 
-        <div class="news-card">
-          <h3>Volunteer Opportunities Open</h3>
-          <p>CJSF is welcoming new volunteers for production, hosting, and events support.</p>
+        <div class="grid">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=1200&auto=format&fit=crop" alt="">
+            <h3>Film Review</h3>
+            <p>A text-based review post with image support for A&amp;E content.</p>
+            <div class="tag-row">
+              <span class="tag">Film & TV</span>
+              <span class="tag">Review</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=1200&auto=format&fit=crop" alt="">
+            <h3>Campus News Update</h3>
+            <p>A discoverable news post that can live beside audio content in one system.</p>
+            <div class="tag-row">
+              <span class="tag">SFU</span>
+              <span class="tag">News</span>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- ARCHIVE -->
       <div id="archiveSection" class="hidden">
-        <h1>🎙️ Archive</h1>
-
-        <div class="archive-card" onclick="playArchive(1)">
-          <h3>Morning Talk — April 10</h3>
-          <p>Community talk and local updates.</p>
+        <div class="hero">
+          <h1>Archive</h1>
+          <p>Browse older audio content by date.</p>
         </div>
 
-        <div class="archive-card" onclick="playArchive(2)">
-          <h3>Indie Hour — April 8</h3>
-          <p>Independent music selections and artist features.</p>
+        <div class="grid">
+          <div class="card">
+            <h3>April 2026 Archive</h3>
+            <p>Most recent interviews, performances, and segments.</p>
+            <button class="button secondary" onclick="playAudio('April 2026 Archive Sample','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3')">Play Sample</button>
+          </div>
+
+          <div class="card">
+            <h3>March 2026 Archive</h3>
+            <p>Older audio content sorted by date.</p>
+            <button class="button secondary" onclick="playAudio('March 2026 Archive Sample','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3')">Play Sample</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- UPLOAD -->
+      <div id="uploadSection" class="hidden">
+        <div class="hero">
+          <h1>Upload Content</h1>
+          <p>Prototype form for audio posts or text/image posts.</p>
         </div>
 
-        <div class="archive-card" onclick="playArchive(3)">
-          <h3>Jazz Night — April 5</h3>
-          <p>Late-night jazz session from the archive.</p>
+        <div class="form-wrap">
+          <div class="form-group">
+            <label>Post Type</label>
+            <select>
+              <option>Audio Post</option>
+              <option>Text / Image Post</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" placeholder="Enter title">
+          </div>
+
+          <div class="form-group">
+            <label>Short Description</label>
+            <input type="text" placeholder="Short summary">
+          </div>
+
+          <div class="form-group">
+            <label>Description / Body Content</label>
+            <textarea placeholder="Full body content"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Audio File</label>
+            <input type="file">
+          </div>
+
+          <div class="form-group">
+            <label>Image</label>
+            <input type="file">
+          </div>
+
+          <div class="form-group">
+            <label>Author</label>
+            <input type="text" placeholder="Author name">
+          </div>
+
+          <div class="form-group">
+            <label>Guests</label>
+            <input type="text" placeholder="Guest names">
+          </div>
+
+          <div class="form-group">
+            <label>Originating Show / First Aired On</label>
+            <input type="text" placeholder="Show name">
+          </div>
+
+          <div class="form-group">
+            <label>First Air Date</label>
+            <input type="date">
+          </div>
+
+          <div class="form-group">
+            <label>Upload Date</label>
+            <input type="date">
+          </div>
+
+          <div class="form-group">
+            <label>Topic</label>
+            <select>
+              <option>Music</option>
+              <option>Arts</option>
+              <option>Theatre</option>
+              <option>Comedy</option>
+              <option>Film & TV</option>
+              <option>Public Affairs</option>
+              <option>Politics</option>
+              <option>Local</option>
+              <option>Provincial</option>
+              <option>National</option>
+              <option>International</option>
+              <option>SFU</option>
+              <option>Sports</option>
+              <option>Technology</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Audio Type</label>
+            <select>
+              <option>Interview</option>
+              <option>Performance</option>
+              <option>Segment</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Keywords</label>
+            <input type="text" placeholder="Ex: local music, interview, sfu">
+          </div>
+
+          <button class="button" type="button" onclick="alert('Demo only — backend upload not connected yet.')">Save Content</button>
+          <p class="small-note">This is only a UI prototype. Real upload needs backend or CMS integration.</p>
+        </div>
+      </div>
+
+      <!-- DETAIL -->
+      <div id="detailSection" class="hidden">
+        <div class="hero">
+          <h1>Audio Detail</h1>
+          <p>Full post information with media player.</p>
+        </div>
+
+        <div class="detail-card">
+          <img id="detailImage" src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop" alt="">
+          <h2 id="detailTitle">Audio Post Title</h2>
+
+          <div class="tag-row">
+            <span class="tag" id="detailTopic">Music</span>
+            <span class="tag" id="detailType">Interview</span>
+          </div>
+
+          <p id="detailDescription">This is where the full description or body content would appear.</p>
+
+          <div class="meta">
+            <strong>Author:</strong> <span id="detailAuthor">A&E Team</span><br>
+            <strong>Guests:</strong> <span id="detailGuests">Guest Name</span><br>
+            <strong>Originating Show:</strong> <span id="detailShow">Morning Mix</span><br>
+            <strong>First Air Date:</strong> <span id="detailAirDate">April 3, 2026</span>
+          </div>
+
+          <button class="button" onclick="playDetailAudio()">Play Audio</button>
         </div>
       </div>
 
@@ -264,85 +585,71 @@
   </div>
 
   <script>
+    let currentDetailAudio = "";
+
     function showSection(section, clicked) {
       document.getElementById("homeSection").classList.add("hidden");
-      document.getElementById("eventsSection").classList.add("hidden");
+      document.getElementById("audioSection").classList.add("hidden");
       document.getElementById("newsSection").classList.add("hidden");
       document.getElementById("archiveSection").classList.add("hidden");
+      document.getElementById("uploadSection").classList.add("hidden");
+      document.getElementById("detailSection").classList.add("hidden");
 
-      if (section === "home") {
-        document.getElementById("homeSection").classList.remove("hidden");
-      }
-
-      if (section === "events") {
-        document.getElementById("eventsSection").classList.remove("hidden");
-      }
-
-      if (section === "news") {
-        document.getElementById("newsSection").classList.remove("hidden");
-      }
-
-      if (section === "archive") {
-        document.getElementById("archiveSection").classList.remove("hidden");
-      }
+      document.getElementById(section + "Section").classList.remove("hidden");
 
       if (clicked) {
-        document.querySelectorAll(".menu-item").forEach(item => {
-          item.classList.remove("active");
-        });
+        document.querySelectorAll(".menu-item").forEach(item => item.classList.remove("active"));
         clicked.classList.add("active");
       }
     }
 
-    function playLive() {
-      let player = document.getElementById("audioPlayer");
-      let nowPlaying = document.getElementById("nowPlaying");
-
-      player.src = "PUT_LIVE_STREAM_HERE";
-      nowPlaying.innerText = "🔴 CJSF Live";
-
-      player.play();
+    function playAudio(title, src) {
+      const player = document.getElementById("audioPlayer");
+      const nowPlaying = document.getElementById("nowPlaying");
+      player.src = src;
+      nowPlaying.innerText = "▶ " + title;
+      player.play().catch(() => {
+        alert("Unable to play audio.");
+      });
     }
 
-    function playPodcast(id) {
-      let player = document.getElementById("audioPlayer");
-      let nowPlaying = document.getElementById("nowPlaying");
+    function filterAudio(topic, clicked) {
+      const items = document.querySelectorAll(".audio-item");
+      items.forEach(item => {
+        if (topic === "all" || item.dataset.topic === topic) {
+          item.style.display = "block";
+        } else {
+          item.style.display = "none";
+        }
+      });
 
-      if (id === 1) {
-        player.src = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
-        nowPlaying.innerText = "🎙️ Featured Podcast";
-      }
-
-      if (id === 2) {
-        player.src = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3";
-        nowPlaying.innerText = "🎧 Latest Podcast Episode";
-      }
-
-      player.play();
+      document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
+      clicked.classList.add("active");
     }
 
-    function playArchive(id) {
-      let player = document.getElementById("audioPlayer");
-      let nowPlaying = document.getElementById("nowPlaying");
+    function openDetail(title, topic, type, description, author, guests, show, airDate, audioSrc, imageSrc) {
+      document.getElementById("detailTitle").innerText = title;
+      document.getElementById("detailTopic").innerText = topic;
+      document.getElementById("detailType").innerText = type;
+      document.getElementById("detailDescription").innerText = description;
+      document.getElementById("detailAuthor").innerText = author;
+      document.getElementById("detailGuests").innerText = guests;
+      document.getElementById("detailShow").innerText = show;
+      document.getElementById("detailAirDate").innerText = airDate;
+      document.getElementById("detailImage").src = imageSrc;
+      currentDetailAudio = audioSrc;
 
-      if (id === 1) {
-        player.src = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
-        nowPlaying.innerText = "Morning Talk — April 10";
+      document.querySelectorAll(".menu-item").forEach(item => item.classList.remove("active"));
+      showSection("detail");
+    }
+
+    function playDetailAudio() {
+      if (!currentDetailAudio) {
+        alert("No audio selected.");
+        return;
       }
-
-      if (id === 2) {
-        player.src = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3";
-        nowPlaying.innerText = "Indie Hour — April 8";
-      }
-
-      if (id === 3) {
-        player.src = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3";
-        nowPlaying.innerText = "Jazz Night — April 5";
-      }
-
-      player.play();
+      playAudio(document.getElementById("detailTitle").innerText, currentDetailAudio);
     }
   </script>
-
 </body>
 </html>
