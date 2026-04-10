@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Radio App</title>
 
   <style>
@@ -41,13 +41,13 @@
     .main {
       flex: 1;
       padding: 24px;
-      padding-bottom: 220px;
       background: linear-gradient(135deg, #1c1c1c, #3d1f1f, #111827);
     }
 
     .section {
       max-width: 760px;
       color: white;
+      padding-bottom: 40px;
     }
 
     h1 {
@@ -90,20 +90,21 @@
     }
 
     .player {
-      position: fixed;
-      left: 220px;
-      right: 0;
-      bottom: 0;
+      position: sticky;
+      bottom: 20px;
+      margin-top: 40px;
+      width: 100%;
+      max-width: 520px;
       background: #121212;
       color: white;
-      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
-      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 12px 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
       z-index: 1000;
     }
 
     #audioPlayer {
       width: 100%;
-      max-width: 460px;
       margin-top: 8px;
       display: block;
     }
@@ -119,11 +120,11 @@
 
       .main {
         padding: 20px;
-        padding-bottom: 240px;
       }
 
       .player {
-        left: 0;
+        max-width: 100%;
+        bottom: 10px;
       }
 
       h1 {
@@ -166,12 +167,12 @@
         <p>Time: 9:00 AM</p>
         <p>Weekly news and discussion.</p>
       </div>
-    </div>
-  </div>
 
-  <div class="player">
-    <div id="nowPlaying">Now Playing: Select a station</div>
-    <audio id="audioPlayer" controls></audio>
+      <div class="player">
+        <div id="nowPlaying">Now Playing: Select a station</div>
+        <audio id="audioPlayer" controls></audio>
+      </div>
+    </div>
   </div>
 
   <script>
