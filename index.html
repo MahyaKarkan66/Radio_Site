@@ -116,6 +116,36 @@
       margin-top: 0;
     }
 
+    .search-wrap {
+      margin: 18px 0 22px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.55);
+      color: white;
+      font-size: 16px;
+      outline: none;
+      backdrop-filter: blur(8px);
+    }
+
+    .search-input::placeholder {
+      color: #bfbfbf;
+    }
+
+    .no-results {
+      display: none;
+      margin-top: 10px;
+      color: #d6d6d6;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -340,9 +370,19 @@
           <p>Discover featured audio, interviews, performances, and community content in one streamlined web app experience.</p>
         </div>
 
+        <div class="search-wrap">
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Search featured audio..."
+            oninput="filterSectionItems('homeSection', this.value)"
+          />
+          <div class="no-results" id="homeSectionNoResults">No matching content found.</div>
+        </div>
+
         <h2>Featured Audio</h2>
         <div class="grid">
-          <div class="card">
+          <div class="card searchable-item">
             <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop" alt="">
             <h3>Local Music Interview</h3>
             <p>A featured artist interview highlighted on the homepage.</p>
@@ -351,10 +391,15 @@
               <span class="tag">Interview</span>
               <span class="tag">Local</span>
             </div>
+            <div class="meta">
+              Author: A&E Team<br>
+              Guests: Indie Artist Collective<br>
+              First Aired On: Morning Mix
+            </div>
             <button class="button" onclick="openDetail('Local Music Interview','Music','Interview','A featured artist interview highlighted on the homepage.','A&E Team','Indie Artist Collective','Morning Mix','April 3, 2026','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3','https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop')">View</button>
           </div>
 
-          <div class="card">
+          <div class="card searchable-item">
             <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1200&auto=format&fit=crop" alt="">
             <h3>Live Comedy Segment</h3>
             <p>A short audio feature that is easy to discover and share.</p>
@@ -362,16 +407,24 @@
               <span class="tag">Comedy</span>
               <span class="tag">Performance</span>
             </div>
+            <div class="meta">
+              Author: Station Team<br>
+              First Aired On: Late Night Hour
+            </div>
             <button class="button" onclick="openDetail('Live Comedy Segment','Comedy','Performance','A short audio feature that is easy to discover and share.','Station Team','Guest Comedian','Late Night Hour','April 6, 2026','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3','https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1200&auto=format&fit=crop')">View</button>
           </div>
 
-          <div class="card">
+          <div class="card searchable-item">
             <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1200&auto=format&fit=crop" alt="">
             <h3>Tech & Public Affairs Talk</h3>
             <p>Audio organized by topic instead of just by upload date.</p>
             <div class="tag-row">
               <span class="tag">Technology</span>
               <span class="tag">Segment</span>
+            </div>
+            <div class="meta">
+              Author: News Desk<br>
+              First Aired On: Civic Signal
             </div>
             <button class="button" onclick="openDetail('Tech & Public Affairs Talk','Technology','Segment','Audio organized by topic instead of just by upload date.','News Desk','Campus Speaker','Civic Signal','April 8, 2026','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3','https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1200&auto=format&fit=crop')">View</button>
           </div>
@@ -385,16 +438,27 @@
           <p>Browse audio posts by topic.</p>
         </div>
 
+        <div class="search-wrap">
+          <input
+            type="text"
+            class="search-input"
+            id="audioSearchInput"
+            placeholder="Search audio by title, topic, or description..."
+            oninput="updateAudioFilters()"
+          />
+          <div class="no-results" id="audioSectionNoResults">No matching content found.</div>
+        </div>
+
         <div class="filters">
-          <button class="filter-btn active" onclick="filterAudio('all', this)">All</button>
-          <button class="filter-btn" onclick="filterAudio('music', this)">Music</button>
-          <button class="filter-btn" onclick="filterAudio('arts', this)">Arts</button>
-          <button class="filter-btn" onclick="filterAudio('technology', this)">Technology</button>
-          <button class="filter-btn" onclick="filterAudio('politics', this)">Politics</button>
+          <button class="filter-btn active" onclick="setAudioTopic('all', this)">All</button>
+          <button class="filter-btn" onclick="setAudioTopic('music', this)">Music</button>
+          <button class="filter-btn" onclick="setAudioTopic('arts', this)">Arts</button>
+          <button class="filter-btn" onclick="setAudioTopic('technology', this)">Technology</button>
+          <button class="filter-btn" onclick="setAudioTopic('politics', this)">Politics</button>
         </div>
 
         <div class="grid">
-          <div class="card audio-item" data-topic="music">
+          <div class="card audio-item searchable-item" data-topic="music">
             <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=1200&auto=format&fit=crop" alt="">
             <h3>Artist Interview</h3>
             <p>Interview with a local artist about a new release.</p>
@@ -405,7 +469,7 @@
             <button class="button secondary" onclick="playAudio('Artist Interview','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')">Play</button>
           </div>
 
-          <div class="card audio-item" data-topic="arts">
+          <div class="card audio-item searchable-item" data-topic="arts">
             <img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=80&w=1200&auto=format&fit=crop" alt="">
             <h3>Theatre Performance Clip</h3>
             <p>A short performance clip from the arts section.</p>
@@ -416,7 +480,7 @@
             <button class="button secondary" onclick="playAudio('Theatre Performance Clip','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3')">Play</button>
           </div>
 
-          <div class="card audio-item" data-topic="technology">
+          <div class="card audio-item searchable-item" data-topic="technology">
             <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="">
             <h3>Campus Tech Talk</h3>
             <p>A segment with searchable topic tagging.</p>
@@ -427,7 +491,7 @@
             <button class="button secondary" onclick="playAudio('Campus Tech Talk','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3')">Play</button>
           </div>
 
-          <div class="card audio-item" data-topic="politics">
+          <div class="card audio-item searchable-item" data-topic="politics">
             <img src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1200&auto=format&fit=crop" alt="">
             <h3>Local Affairs Roundtable</h3>
             <p>A public affairs discussion categorized by topic.</p>
@@ -447,17 +511,27 @@
           <p>Text and image-based posts can live in the same content system as audio.</p>
         </div>
 
-        <div class="list-card">
+        <div class="search-wrap">
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Search news..."
+            oninput="filterSectionItems('newsSection', this.value)"
+          />
+          <div class="no-results" id="newsSectionNoResults">No matching content found.</div>
+        </div>
+
+        <div class="list-card searchable-item">
           <h3>Film Review</h3>
           <p>A text-based review post with image support for A&amp;E content.</p>
         </div>
 
-        <div class="list-card">
+        <div class="list-card searchable-item">
           <h3>Campus News Update</h3>
           <p>A discoverable news post that can sit alongside audio content.</p>
         </div>
 
-        <div class="list-card">
+        <div class="list-card searchable-item">
           <h3>Community Headlines</h3>
           <p>Important local and campus updates highlighted in a simple, readable format.</p>
         </div>
@@ -470,19 +544,29 @@
           <p>Browse older audio content by date.</p>
         </div>
 
-        <div class="list-card">
+        <div class="search-wrap">
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Search archive..."
+            oninput="filterSectionItems('archiveSection', this.value)"
+          />
+          <div class="no-results" id="archiveSectionNoResults">No matching content found.</div>
+        </div>
+
+        <div class="list-card searchable-item">
           <h3>April 2026</h3>
           <p>Recent interviews, performances, and segments.</p>
           <button class="button secondary" onclick="playAudio('April 2026 Archive Sample','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3')">Play Sample</button>
         </div>
 
-        <div class="list-card">
+        <div class="list-card searchable-item">
           <h3>March 2026</h3>
           <p>Older content sorted by most recent uploads.</p>
           <button class="button secondary" onclick="playAudio('March 2026 Archive Sample','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3')">Play Sample</button>
         </div>
 
-        <div class="list-card">
+        <div class="list-card searchable-item">
           <h3>February 2026</h3>
           <p>Archived segments and community audio posts.</p>
           <button class="button secondary" onclick="playAudio('February 2026 Archive Sample','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')">Play Sample</button>
@@ -524,6 +608,7 @@
 
   <script>
     let currentDetailAudio = "";
+    let currentAudioTopic = "all";
 
     function showSection(section, clicked) {
       document.getElementById("homeSection").classList.add("hidden");
@@ -564,14 +649,61 @@
       });
     }
 
-    function filterAudio(topic, clicked) {
-      const items = document.querySelectorAll(".audio-item");
-      items.forEach(item => {
-        item.style.display = (topic === "all" || item.dataset.topic === topic) ? "block" : "none";
-      });
+    function setAudioTopic(topic, clicked) {
+      currentAudioTopic = topic;
 
       document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
       clicked.classList.add("active");
+
+      updateAudioFilters();
+    }
+
+    function updateAudioFilters() {
+      const searchValue = document.getElementById("audioSearchInput").value.trim().toLowerCase();
+      const items = document.querySelectorAll("#audioSection .audio-item");
+      const noResults = document.getElementById("audioSectionNoResults");
+      let visibleCount = 0;
+
+      items.forEach(item => {
+        const itemTopic = item.dataset.topic;
+        const itemText = item.innerText.toLowerCase();
+
+        const matchesTopic = currentAudioTopic === "all" || itemTopic === currentAudioTopic;
+        const matchesSearch = itemText.includes(searchValue);
+
+        if (matchesTopic && matchesSearch) {
+          item.style.display = "block";
+          visibleCount++;
+        } else {
+          item.style.display = "none";
+        }
+      });
+
+      noResults.style.display = visibleCount === 0 ? "block" : "none";
+    }
+
+    function filterSectionItems(sectionId, query) {
+      const section = document.getElementById(sectionId);
+      const items = section.querySelectorAll(".searchable-item");
+      const noResults = document.getElementById(sectionId + "NoResults");
+
+      let visibleCount = 0;
+      const searchText = query.trim().toLowerCase();
+
+      items.forEach(item => {
+        const text = item.innerText.toLowerCase();
+
+        if (text.includes(searchText)) {
+          item.style.display = "";
+          visibleCount++;
+        } else {
+          item.style.display = "none";
+        }
+      });
+
+      if (noResults) {
+        noResults.style.display = visibleCount === 0 ? "block" : "none";
+      }
     }
 
     function openDetail(title, topic, type, description, author, guests, show, airDate, audioSrc, imageSrc) {
