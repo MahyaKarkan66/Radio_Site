@@ -641,19 +641,25 @@
 
     const archiveData = [
       {
-        title: "April 2026",
-        description: "Recent interviews, performances, and segments.",
-        audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
-      },
-      {
-        title: "March 2026",
-        description: "Older content sorted by most recent uploads.",
-        audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
-      },
-      {
-        title: "February 2026",
-        description: "Archived segments and community audio posts.",
-        audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+        title: "Speak Up!",
+    episode: "April 6 Episode",
+    description: "Local politics discussion",
+    date: "April 6, 2026",
+    audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+  },
+  {
+    title: "Studio 6",
+    episode: "Live Session",
+    description: "Local band performance",
+    date: "April 2, 2026",
+    audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+  },
+  {
+    title: "Boom Bap",
+    episode: "Hip Hop Hour",
+    description: "Underground hip hop showcase",
+    date: "March 30, 2026",
+    audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
       }
     ];
 
@@ -784,24 +790,29 @@
 
     function renderArchive() {
       const container = document.getElementById("archiveContainer");
-      container.innerHTML = "";
+  container.innerHTML = "";
 
-      archiveData.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "list-card searchable-item";
-        card.innerHTML = `
-          <h3>${item.title}</h3>
-          <p>${item.description}</p>
-          <div class="btn-row" style="margin-top:12px;">
-            <button class="btn btn-light">Play Sample</button>
-          </div>
-        `;
+  archiveData.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "list-card searchable-item";
 
-        card.querySelector(".btn-light").addEventListener("click", () => {
-          playAudio(item.title + " Archive Sample", item.audio);
-        });
+    card.innerHTML = `
+      <h3>${item.title}</h3>
+      <p><strong>${item.episode}</strong></p>
+      <p>${item.description}</p>
+      <div class="meta">
+        Date: ${item.date}
+      </div>
+      <div class="btn-row" style="margin-top:10px;">
+        <button class="btn btn-light">Play</button>
+      </div>
+    `;
 
-        container.appendChild(card);
+    card.querySelector("button").addEventListener("click", () => {
+      playAudio(item.title + " - " + item.episode, item.audio);
+    });
+
+    container.appendChild(card);
       });
     }
 
