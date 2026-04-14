@@ -748,6 +748,13 @@
             />
             <div class="no-results" id="audioSectionNoResults">No matching content found.</div>
           </div>
+          <div class="form-group" style="margin-bottom: 18px;">
+  <label for="audioSortSelect">Sort by Date</label>
+  <select id="audioSortSelect">
+    <option value="newest">Newest First</option>
+    <option value="oldest">Oldest First</option>
+  </select>
+</div>
 
           <div class="filters">
             <button class="filter-btn active" onclick="setAudioTopic('all', this)">All</button>
@@ -932,6 +939,7 @@
     let currentDetailAudio = "";
     let currentAudioTopic = "all";
     let currentSection = "home";
+    let currentAudioSort = "newest";
 
     const featuredAudioData = [
       {
@@ -1146,6 +1154,10 @@
     function capitalize(text) {
       return text.charAt(0).toUpperCase() + text.slice(1);
     }
+    function parseDateString(dateString) {
+  const parsed = new Date(dateString);
+  return isNaN(parsed) ? new Date(0) : parsed;
+}
 
     function renderFeaturedAudio() {
       const container = document.getElementById("homeFeaturedContainer");
@@ -1196,36 +1208,23 @@
     }
 
     function renderAudio() {
-      const container = document.getElementById("audioContainer");
-      container.innerHTML = "";
+  const container = document.getElementById("audioContainer");
+  container.innerHTML = "";
 
-      audioData.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "audio-card audio-item searchable-item";
-        card.setAttribute("data-topic", item.topic);
+  const sortedAudio = [...audioData].sort((a, b) => {
+    const dateA = parseDateString(a.uploadDate);
+    const dateB = parseDateString(b.uploadDate);
 
-        card.innerHTML = `
-          <img src="${item.image}" alt="${item.title}">
-          <div class="audio-card-body">
-            <h3>${item.title}</h3>
-            <p>${item.shortDescription}</p>
-            <div class="tag-row">
-              <span class="tag">${capitalize(item.topic)}</span>
-              <span class="tag">${item.audioType}</span>
-            </div>
-            <div class="btn-row">
-              <button class="btn btn-light">Play</button>
-            </div>
-          </div>
-        `;
-
-        card.querySelector(".btn-light").addEventListener("click", () => {
-          playAudio(item.title, item.audio);
-        });
-
-        container.appendChild(card);
-      });
+    if (currentAudioSort === "newest") {
+      return dateB - dateA;
+    } else {
+      return dateA - dateB;
     }
+  });
+
+  sortedAudio.forEach(item => {
+      });
+}
 
     function renderNews() {
       const container = document.getElementById("newsContainer");
@@ -1415,6 +1414,11 @@ function saveDraftAudio() {
 }
 document.getElementById("saveDraftBtn").addEventListener("click", saveDraftAudio);
 document.getElementById("clearUploadBtn").addEventListener("click", clearUploadForm);
+document.getElementById("audioSortSelect").addEventListener("change", function () {
+  currentAudioSort = this.value;
+  renderAudio();
+  updateAudioFilters();
+} I'm);
 
     renderFeaturedAudio();
     renderAudio();
