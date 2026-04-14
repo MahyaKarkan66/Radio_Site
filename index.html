@@ -548,11 +548,12 @@
       <p id="detailDescription">Description goes here.</p>
 
       <div class="meta">
-        <strong>Author:</strong> <span id="detailAuthor"></span><br>
-        <strong>Guests:</strong> <span id="detailGuests"></span><br>
-        <strong>Originating Show:</strong> <span id="detailShow"></span><br>
-        <strong>First Air Date:</strong> <span id="detailAirDate"></span>
-      </div>
+  <strong>Author:</strong> <span id="detailAuthor"></span><br>
+  <strong>Guests:</strong> <span id="detailGuests"></span><br>
+  <strong>Originating Show:</strong> <span id="detailShow"></span><br>
+  <strong>First Air Date:</strong> <span id="detailAirDate"></span><br>
+  <strong>Upload Date:</strong> <span id="detailUploadDate"></span>
+</div>
 
       <button class="btn btn-primary" onclick="playDetailAudio()">Play Audio</button>
     </div>
@@ -565,64 +566,95 @@
     const featuredAudioData = [
       {
         title: "Local Music Interview",
-        description: "A featured artist interview highlighted on the homepage.",
-        topic: "Music",
-        type: "Interview",
-        author: "A&E Team",
-        guests: "Indie Artist Collective",
-        show: "Morning Mix",
-        airDate: "April 3, 2026",
-        audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-        image: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop"
-      },
-      {
-        title: "Live Comedy Segment",
-        description: "A short audio feature that is easy to discover and share.",
-        topic: "Comedy",
-        type: "Performance",
-        author: "Station Team",
-        guests: "Guest Comedian",
-        show: "Late Night Hour",
-        airDate: "April 6, 2026",
-        audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-        image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1200&auto=format&fit=crop"
+    shortDescription: "A featured artist interview highlighted on the homepage.",
+    body: "This featured audio item highlights a local musician interview and shows how homepage content can be surfaced in an organized way.",
+    topic: "Music",
+    audioType: "Interview",
+    author: "A&E Team",
+    guests: "Indie Artist Collective",
+    show: "Morning Mix",
+    firstAirDate: "April 3, 2026",
+    uploadDate: "April 8, 2026",
+    audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    image: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop"
+  },
+  {
+    title: "Live Comedy Segment",
+    shortDescription: "A short audio feature that is easy to discover and share.",
+    body: "A featured comedy performance clip intended to be easy to find, categorize, and play from the homepage.",
+    topic: "Comedy",
+    audioType: "Performance",
+    author: "Station Team",
+    guests: "Guest Comedian",
+    show: "Late Night Hour",
+    firstAirDate: "April 6, 2026",
+    uploadDate: "April 9, 2026",
+    audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+    image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1200&auto=format&fit=crop"
       }
     ];
 
     const audioData = [
-      {
-        title: "Artist Interview",
-        description: "Interview with a local artist about a new release.",
-        topic: "music",
-        type: "Interview",
-        audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-        image: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=1200&auto=format&fit=crop"
-      },
-      {
-        title: "Theatre Performance Clip",
-        description: "A short performance clip from the arts section.",
-        topic: "arts",
-        type: "Performance",
-        audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-        image: "https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=80&w=1200&auto=format&fit=crop"
-      },
-      {
-        title: "Campus Tech Talk",
-        description: "A segment with searchable topic tagging.",
-        topic: "technology",
-        type: "Segment",
-        audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-        image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop"
-      },
-      {
-        title: "Local Affairs Roundtable",
-        description: "A public affairs discussion categorized by topic.",
-        topic: "politics",
-        type: "Public Affairs",
-        audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-        image: "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1200&auto=format&fit=crop"
-      }
-    ];
+  {
+    title: "Artist Interview",
+    shortDescription: "Interview with a local artist about a new release.",
+    body: "A longer description for the interview. This can include more context about the guest, the topic, and why the audio content is being featured.",
+    topic: "music",
+    audioType: "Interview",
+    author: "A&E Team",
+    guests: "Local Artist",
+    show: "Morning Mix",
+    firstAirDate: "April 5, 2026",
+    uploadDate: "April 8, 2026",
+    audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    image: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=1200&auto=format&fit=crop"
+  },
+  {
+    title: "Theatre Performance Clip",
+    shortDescription: "A short performance clip from the arts section.",
+    body: "This audio post features a short theatre-related performance and serves as an example of arts programming content.",
+    topic: "arts",
+    audioType: "Performance",
+    author: "Arts Desk",
+    guests: "Student Performers",
+    show: "Studio 6",
+    firstAirDate: "April 2, 2026",
+    uploadDate: "April 7, 2026",
+    audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+    image: "https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=80&w=1200&auto=format&fit=crop"
+  },
+  {
+    title: "Campus Tech Talk",
+    shortDescription: "A segment with searchable topic tagging.",
+    body: "This segment focuses on technology topics and demonstrates how topic-based discovery can work inside the web app.",
+    topic: "technology",
+    audioType: "Segment",
+    author: "News Desk",
+    guests: "Campus Speaker",
+    show: "Civic Signal",
+    firstAirDate: "March 30, 2026",
+    uploadDate: "April 6, 2026",
+    audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop"
+  },
+  {
+    title: "Local Affairs Roundtable",
+    shortDescription: "A public affairs discussion categorized by topic.",
+    body: "A roundtable discussion focused on local politics and public affairs, included here as a searchable audio post.",
+    topic: "politics",
+    audioType: "Segment",
+    author: "Public Affairs Team",
+    guests: "Community Panel",
+    show: "Speak Up!",
+    firstAirDate: "March 28, 2026",
+    uploadDate: "April 4, 2026",
+    audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    image: "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1200&auto=format&fit=crop"
+  }
+];
+      
+        
+    
 
     const newsData = [
       {
@@ -706,10 +738,10 @@
           <img src="${item.image}" alt="${item.title}">
           <div class="audio-card-body">
             <h3>${item.title}</h3>
-            <p>${item.description}</p>
+            <p>${item.shortDescription}</p>
             <div class="tag-row">
               <span class="tag">${item.topic}</span>
-              <span class="tag">${item.type}</span>
+             <span class="tag">${item.audioType}</span>
             </div>
             <div class="meta">
               Author: ${item.author}<br>
@@ -724,17 +756,19 @@
 
         card.querySelector(".btn-primary").addEventListener("click", () => {
           openDetail(
-            item.title,
-            item.topic,
-            item.type,
-            item.description,
-            item.author,
-            item.guests,
-            item.show,
-            item.airDate,
-            item.audio,
-            item.image
-          );
+           item.title,
+  item.topic,
+  item.audioType,
+  item.body,
+  item.author,
+  item.guests,
+  item.show,
+  item.firstAirDate,
+  item.uploadDate,
+  item.audio,
+  item.image
+);
+          
         });
 
         container.appendChild(card);
@@ -754,10 +788,10 @@
           <img src="${item.image}" alt="${item.title}">
           <div class="audio-card-body">
             <h3>${item.title}</h3>
-            <p>${item.description}</p>
+            <p>${item.shortDescription}</p>
             <div class="tag-row">
               <span class="tag">${capitalize(item.topic)}</span>
-              <span class="tag">${item.type}</span>
+              <span class="tag">${item.audioType}</span>
             </div>
             <div class="btn-row">
               <button class="btn btn-light">Play</button>
@@ -867,7 +901,7 @@
       noResults.style.display = visibleCount === 0 ? "block" : "none";
     }
 
-    function openDetail(title, topic, type, description, author, guests, show, airDate, audioSrc, imageSrc) {
+    function openDetail(title, topic, type, description, author, guests, show, airDate, uploadDate, audioSrc, imageSrc)  {
       document.getElementById("detailTitle").innerText = title;
       document.getElementById("detailTopic").innerText = topic;
       document.getElementById("detailType").innerText = type;
@@ -875,7 +909,7 @@
       document.getElementById("detailAuthor").innerText = author;
       document.getElementById("detailGuests").innerText = guests;
       document.getElementById("detailShow").innerText = show;
-      document.getElementById("detailAirDate").innerText = airDate;
+      document.getElementById("detailUploadDate").innerText = uploadDate;
       document.getElementById("detailImage").src = imageSrc;
       currentDetailAudio = audioSrc;
       document.getElementById("detailModal").classList.add("show");
