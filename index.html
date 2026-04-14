@@ -12,260 +12,321 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #0b0b0b;
-      color: #fff;
+      background: #efefef;
+      color: #111;
+    }
+
+    .app-shell {
       min-height: 100vh;
-      display: flex;
+      background: #efefef;
     }
 
-    .sidebar {
-      width: 230px;
-      background: #111;
-      padding: 20px;
-      border-right: 1px solid rgba(255,255,255,0.08);
-      flex-shrink: 0;
-      transition: transform 0.3s ease;
-      z-index: 1000;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #ff6b57;
-      margin-bottom: 26px;
-    }
-
-    .menu-item {
-      padding: 12px 14px;
-      margin-bottom: 10px;
-      border-radius: 10px;
-      color: #d7d7d7;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .menu-item:hover,
-    .menu-item.active {
-      background: rgba(255,255,255,0.08);
-      color: #fff;
-    }
-
-    .main {
-      flex: 1;
-      min-width: 0;
-      padding: 24px;
-      background:
-        linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.9)),
-        url("https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1600&auto=format&fit=crop");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
+    .top-hero {
+      height: 150px;
+      background: #0c7289;
     }
 
     .topbar {
-      display: none;
+      background: #f7f7f7;
+      margin-top: -1px;
+      padding: 18px 20px 10px;
+      border-bottom: 1px solid #dddddd;
+    }
+
+    .topbar-row {
+      display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 20px;
+      gap: 12px;
+      margin-bottom: 14px;
     }
 
-    .hamburger {
-      font-size: 28px;
-      background: rgba(255,255,255,0.08);
+    .icon-btn {
+      background: none;
       border: none;
-      color: white;
-      border-radius: 10px;
-      padding: 8px 12px;
-      cursor: pointer;
-    }
-
-    .topbar-title {
       font-size: 22px;
-      font-weight: bold;
-      color: #ff6b57;
+      cursor: pointer;
+      color: #111;
+      padding: 4px;
     }
 
-    .overlay {
-      display: none;
+    .brand {
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .brand span {
+      color: #0c7289;
+    }
+
+    .location {
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .tabs {
+      display: flex;
+      border-top: 1px solid #e5e5e5;
+      padding-top: 10px;
+    }
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 14px 8px;
+      cursor: pointer;
+      color: #111;
+      font-weight: 600;
+      border-bottom: 3px solid transparent;
+    }
+
+    .tab.active {
+      color: #1684a0;
+      border-bottom-color: #1684a0;
+    }
+
+    .content {
+      padding: 26px 20px 120px;
+      max-width: 1000px;
+      margin: 0 auto;
     }
 
     .section {
-      max-width: 1100px;
-    }
-
-    .hidden {
       display: none;
     }
 
-    .hero {
-      margin-bottom: 28px;
+    .section.active {
+      display: block;
     }
 
-    .hero h1 {
-      font-size: 42px;
-      margin-bottom: 10px;
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
     }
 
-    .hero p {
-      color: #e5e5e5;
-      line-height: 1.6;
-      max-width: 760px;
+    .section-header h2 {
+      margin: 0;
+      font-size: 28px;
+      color: #1684a0;
     }
 
-    h2, h3 {
-      margin-top: 0;
+    .section-header .small-action {
+      font-size: 14px;
+      color: #333;
+      background: none;
+      border: none;
+      cursor: pointer;
     }
 
     .search-wrap {
-      margin: 18px 0 22px;
+      margin-bottom: 20px;
     }
 
     .search-input {
       width: 100%;
       padding: 14px 16px;
+      border: 1px solid #d5d5d5;
       border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(0,0,0,0.55);
-      color: white;
+      background: #ffffff;
       font-size: 16px;
       outline: none;
-      backdrop-filter: blur(8px);
     }
 
     .search-input::placeholder {
-      color: #bfbfbf;
+      color: #888;
     }
 
     .no-results {
       display: none;
       margin-top: 10px;
-      color: #d6d6d6;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 14px;
-      padding: 14px 16px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-    }
-
-    .card {
-      background: rgba(0,0,0,0.56);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px;
-      padding: 16px;
-      backdrop-filter: blur(8px);
-      transition: 0.2s;
-    }
-
-    .card:hover {
-      background: rgba(0,0,0,0.68);
-      transform: translateY(-2px);
-    }
-
-    .card img {
-      width: 100%;
-      height: 170px;
-      object-fit: cover;
+      padding: 14px;
       border-radius: 12px;
-      margin-bottom: 12px;
+      background: #fff;
+      border: 1px solid #ddd;
+      color: #666;
+    }
+
+    .hero-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      margin-bottom: 26px;
+    }
+
+    .hero-card h1 {
+      margin: 0 0 8px;
+      font-size: 34px;
+      color: #1684a0;
+    }
+
+    .hero-card p {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 18px;
+    }
+
+    .audio-card {
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+
+    .audio-card img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      display: block;
+      background: #ddd;
+    }
+
+    .audio-card-body {
+      padding: 16px;
+    }
+
+    .audio-card h3 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      line-height: 1.3;
+    }
+
+    .audio-card p {
+      margin: 0 0 12px;
+      color: #444;
+      line-height: 1.5;
     }
 
     .tag-row {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin: 10px 0 12px;
+      margin-bottom: 14px;
     }
 
     .tag {
       font-size: 12px;
       padding: 6px 10px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      color: #f2f2f2;
+      background: #e8eef0;
+      color: #334;
     }
 
     .meta {
       font-size: 13px;
-      color: #c9c9c9;
+      color: #666;
       line-height: 1.5;
-      margin-top: 10px;
+      margin-bottom: 14px;
     }
 
-    .button {
-      margin-top: 12px;
-      display: inline-block;
-      padding: 10px 14px;
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
       border: none;
-      border-radius: 10px;
-      background: #ff6b57;
-      color: white;
+      border-radius: 12px;
+      padding: 10px 14px;
       cursor: pointer;
       font-size: 14px;
+      font-weight: 600;
     }
 
-    .button.secondary {
-      background: rgba(255,255,255,0.1);
+    .btn-primary {
+      background: #1684a0;
+      color: white;
+    }
+
+    .btn-light {
+      background: #eef3f5;
+      color: #111;
     }
 
     .filters {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .filter-btn {
-      padding: 8px 12px;
-      border-radius: 999px;
       border: none;
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: #dde7ea;
+      color: #222;
       cursor: pointer;
-      background: rgba(255,255,255,0.08);
-      color: #fff;
+      font-weight: 600;
     }
 
     .filter-btn.active {
-      background: #ff6b57;
+      background: #1684a0;
+      color: white;
     }
 
     .list-card {
-      background: rgba(0,0,0,0.56);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: #fff;
       border-radius: 16px;
-      padding: 16px;
+      padding: 18px;
       margin-bottom: 14px;
-      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+
+    .list-card h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .list-card p {
+      margin: 0;
+      color: #444;
+      line-height: 1.5;
     }
 
     .player {
-      position: sticky;
+      position: fixed;
+      left: 20px;
+      right: 20px;
       bottom: 16px;
-      margin-top: 30px;
-      background: rgba(10,10,10,0.9);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px;
-      padding: 14px;
-      backdrop-filter: blur(8px);
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+      padding: 14px 16px;
+      z-index: 50;
+    }
+
+    .player-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #222;
     }
 
     #audioPlayer {
       width: 100%;
-      margin-top: 10px;
     }
 
     .modal {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.65);
-      z-index: 1200;
+      background: rgba(0,0,0,0.45);
+      z-index: 100;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 18px;
     }
 
     .modal.show {
@@ -275,12 +336,11 @@
     .modal-card {
       width: 100%;
       max-width: 760px;
-      background: #121212;
-      border-radius: 18px;
-      padding: 18px;
-      border: 1px solid rgba(255,255,255,0.08);
       max-height: 90vh;
       overflow: auto;
+      background: #fff;
+      border-radius: 18px;
+      padding: 18px;
     }
 
     .modal-card img {
@@ -293,81 +353,69 @@
 
     .close-btn {
       float: right;
-      background: rgba(255,255,255,0.08);
-      color: white;
       border: none;
-      border-radius: 10px;
+      background: #eef3f5;
       padding: 8px 12px;
+      border-radius: 10px;
       cursor: pointer;
     }
 
-    @media (max-width: 760px) {
-      body {
-        display: block;
+    @media (max-width: 640px) {
+      .top-hero {
+        height: 120px;
       }
 
-      .topbar {
-        display: flex;
+      .hero-card h1 {
+        font-size: 28px;
       }
 
-      .sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100%;
-        transform: translateX(-100%);
-        box-shadow: 8px 0 30px rgba(0,0,0,0.4);
+      .section-header h2 {
+        font-size: 22px;
       }
 
-      .sidebar.open {
-        transform: translateX(0);
+      .audio-card h3,
+      .list-card h3 {
+        font-size: 20px;
       }
 
-      .overlay.show {
-        display: block;
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.45);
-        z-index: 999;
-      }
-
-      .main {
-        width: 100%;
-        min-height: 100vh;
-      }
-
-      .hero h1 {
-        font-size: 32px;
+      .player {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
       }
     }
   </style>
 </head>
 <body>
+  <div class="app-shell">
+    <div class="top-hero"></div>
 
-  <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
-
-  <div class="sidebar" id="sidebar">
-    <div class="logo">🎧 CJSF</div>
-
-    <div class="menu-item active" onclick="handleMenuClick('home', this)">Home</div>
-    <div class="menu-item" onclick="handleMenuClick('audio', this)">Audio</div>
-    <div class="menu-item" onclick="handleMenuClick('news', this)">News</div>
-    <div class="menu-item" onclick="handleMenuClick('archive', this)">Archive</div>
-  </div>
-
-  <div class="main">
     <div class="topbar">
-      <button class="hamburger" onclick="toggleSidebar()">☰</button>
-      <div class="topbar-title">CJSF</div>
+      <div class="topbar-row">
+        <button class="icon-btn">⌕</button>
+        <div class="brand"><span>CJSF</span> LISTEN</div>
+        <div class="location">VAN ▼</div>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active" onclick="showSection('home', this)">Home</div>
+        <div class="tab" onclick="showSection('audio', this)">Audio</div>
+        <div class="tab" onclick="showSection('news', this)">News</div>
+        <div class="tab" onclick="showSection('archive', this)">Archive</div>
+      </div>
     </div>
 
-    <div class="section">
-
+    <div class="content">
       <!-- HOME -->
-      <div id="homeSection">
-        <div class="hero">
+      <div id="homeSection" class="section active">
+        <div class="hero-card">
           <h1>CJSF Audio & Content</h1>
-          <p>Discover featured audio, interviews, performances, and community content in one streamlined web app experience.</p>
+          <p>Discover featured audio, interviews, performances, reviews, and the latest community content in one place.</p>
+        </div>
+
+        <div class="section-header">
+          <h2>Featured Audio</h2>
+          <button class="small-action">Hide</button>
         </div>
 
         <div class="search-wrap">
@@ -380,15 +428,13 @@
           <div class="no-results" id="homeSectionNoResults">No matching content found.</div>
         </div>
 
-        <h2>Featured Audio</h2>
-        <div class="grid" id="homeFeaturedContainer"></div>
+        <div class="card-grid" id="homeFeaturedContainer"></div>
       </div>
 
       <!-- AUDIO -->
-      <div id="audioSection" class="hidden">
-        <div class="hero">
-          <h1>Audio</h1>
-          <p>Browse audio posts by topic.</p>
+      <div id="audioSection" class="section">
+        <div class="section-header">
+          <h2>Audio</h2>
         </div>
 
         <div class="search-wrap">
@@ -410,14 +456,13 @@
           <button class="filter-btn" onclick="setAudioTopic('politics', this)">Politics</button>
         </div>
 
-        <div class="grid" id="audioContainer"></div>
+        <div class="card-grid" id="audioContainer"></div>
       </div>
 
       <!-- NEWS -->
-      <div id="newsSection" class="hidden">
-        <div class="hero">
-          <h1>News</h1>
-          <p>Text and image-based posts can live in the same content system as audio.</p>
+      <div id="newsSection" class="section">
+        <div class="section-header">
+          <h2>News</h2>
         </div>
 
         <div class="search-wrap">
@@ -434,10 +479,9 @@
       </div>
 
       <!-- ARCHIVE -->
-      <div id="archiveSection" class="hidden">
-        <div class="hero">
-          <h1>Archive</h1>
-          <p>Browse older audio content by date.</p>
+      <div id="archiveSection" class="section">
+        <div class="section-header">
+          <h2>Archive</h2>
         </div>
 
         <div class="search-wrap">
@@ -452,16 +496,14 @@
 
         <div id="archiveContainer"></div>
       </div>
+    </div>
 
-      <div class="player">
-        <div id="nowPlaying">CJSF — Select audio</div>
-        <audio id="audioPlayer" controls></audio>
-      </div>
-
+    <div class="player">
+      <div class="player-title" id="nowPlaying">CJSF — Select audio</div>
+      <audio id="audioPlayer" controls></audio>
     </div>
   </div>
 
-  <!-- DETAIL MODAL -->
   <div class="modal" id="detailModal" onclick="closeDetailOnOverlay(event)">
     <div class="modal-card">
       <button class="close-btn" onclick="closeDetail()">Close</button>
@@ -482,7 +524,7 @@
         <strong>First Air Date:</strong> <span id="detailAirDate"></span>
       </div>
 
-      <button class="button" onclick="playDetailAudio()">Play Audio</button>
+      <button class="btn btn-primary" onclick="playDetailAudio()">Play Audio</button>
     </div>
   </div>
 
@@ -514,18 +556,6 @@
         airDate: "April 6, 2026",
         audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
         image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1200&auto=format&fit=crop"
-      },
-      {
-        title: "Tech & Public Affairs Talk",
-        description: "Audio organized by topic instead of just by upload date.",
-        topic: "Technology",
-        type: "Segment",
-        author: "News Desk",
-        guests: "Campus Speaker",
-        show: "Civic Signal",
-        airDate: "April 8, 2026",
-        audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-        image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1200&auto=format&fit=crop"
       }
     ];
 
@@ -597,31 +627,62 @@
       }
     ];
 
+    function showSection(section, clickedTab) {
+      document.querySelectorAll(".section").forEach(sectionEl => {
+        sectionEl.classList.remove("active");
+      });
+
+      document.getElementById(section + "Section").classList.add("active");
+
+      if (clickedTab) {
+        document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+        clickedTab.classList.add("active");
+      }
+    }
+
+    function playAudio(title, src) {
+      const player = document.getElementById("audioPlayer");
+      const nowPlaying = document.getElementById("nowPlaying");
+      player.src = src;
+      nowPlaying.innerText = "▶ " + title;
+      player.play().catch(() => {
+        alert("Unable to play audio.");
+      });
+    }
+
+    function capitalize(text) {
+      return text.charAt(0).toUpperCase() + text.slice(1);
+    }
+
     function renderFeaturedAudio() {
       const container = document.getElementById("homeFeaturedContainer");
       container.innerHTML = "";
 
       featuredAudioData.forEach(item => {
         const card = document.createElement("div");
-        card.className = "card searchable-item";
+        card.className = "audio-card searchable-item";
 
         card.innerHTML = `
           <img src="${item.image}" alt="${item.title}">
-          <h3>${item.title}</h3>
-          <p>${item.description}</p>
-          <div class="tag-row">
-            <span class="tag">${item.topic}</span>
-            <span class="tag">${item.type}</span>
+          <div class="audio-card-body">
+            <h3>${item.title}</h3>
+            <p>${item.description}</p>
+            <div class="tag-row">
+              <span class="tag">${item.topic}</span>
+              <span class="tag">${item.type}</span>
+            </div>
+            <div class="meta">
+              Author: ${item.author}<br>
+              Guests: ${item.guests}<br>
+              First Aired On: ${item.show}
+            </div>
+            <div class="btn-row">
+              <button class="btn btn-primary">Open Detail</button>
+            </div>
           </div>
-          <div class="meta">
-            Author: ${item.author}<br>
-            Guests: ${item.guests}<br>
-            First Aired On: ${item.show}
-          </div>
-          <button class="button">View</button>
         `;
 
-        card.querySelector(".button").addEventListener("click", () => {
+        card.querySelector(".btn-primary").addEventListener("click", () => {
           openDetail(
             item.title,
             item.topic,
@@ -646,21 +707,25 @@
 
       audioData.forEach(item => {
         const card = document.createElement("div");
-        card.className = "card audio-item searchable-item";
+        card.className = "audio-card audio-item searchable-item";
         card.setAttribute("data-topic", item.topic);
 
         card.innerHTML = `
           <img src="${item.image}" alt="${item.title}">
-          <h3>${item.title}</h3>
-          <p>${item.description}</p>
-          <div class="tag-row">
-            <span class="tag">${capitalize(item.topic)}</span>
-            <span class="tag">${item.type}</span>
+          <div class="audio-card-body">
+            <h3>${item.title}</h3>
+            <p>${item.description}</p>
+            <div class="tag-row">
+              <span class="tag">${capitalize(item.topic)}</span>
+              <span class="tag">${item.type}</span>
+            </div>
+            <div class="btn-row">
+              <button class="btn btn-light">Play</button>
+            </div>
           </div>
-          <button class="button secondary">Play</button>
         `;
 
-        card.querySelector(".button").addEventListener("click", () => {
+        card.querySelector(".btn-light").addEventListener("click", () => {
           playAudio(item.title, item.audio);
         });
 
@@ -693,66 +758,23 @@
         card.innerHTML = `
           <h3>${item.title}</h3>
           <p>${item.description}</p>
-          <button class="button secondary">Play Sample</button>
+          <div class="btn-row" style="margin-top:12px;">
+            <button class="btn btn-light">Play Sample</button>
+          </div>
         `;
 
-        card.querySelector(".button").addEventListener("click", () => {
-          playAudio(`${item.title} Archive Sample`, item.audio);
+        card.querySelector(".btn-light").addEventListener("click", () => {
+          playAudio(item.title + " Archive Sample", item.audio);
         });
 
         container.appendChild(card);
       });
     }
 
-    function capitalize(text) {
-      return text.charAt(0).toUpperCase() + text.slice(1);
-    }
-
-    function showSection(section, clicked) {
-      document.getElementById("homeSection").classList.add("hidden");
-      document.getElementById("audioSection").classList.add("hidden");
-      document.getElementById("newsSection").classList.add("hidden");
-      document.getElementById("archiveSection").classList.add("hidden");
-
-      document.getElementById(section + "Section").classList.remove("hidden");
-
-      if (clicked) {
-        document.querySelectorAll(".menu-item").forEach(item => item.classList.remove("active"));
-        clicked.classList.add("active");
-      }
-    }
-
-    function handleMenuClick(section, clicked) {
-      showSection(section, clicked);
-      closeSidebar();
-    }
-
-    function toggleSidebar() {
-      document.getElementById("sidebar").classList.toggle("open");
-      document.getElementById("overlay").classList.toggle("show");
-    }
-
-    function closeSidebar() {
-      document.getElementById("sidebar").classList.remove("open");
-      document.getElementById("overlay").classList.remove("show");
-    }
-
-    function playAudio(title, src) {
-      const player = document.getElementById("audioPlayer");
-      const nowPlaying = document.getElementById("nowPlaying");
-      player.src = src;
-      nowPlaying.innerText = "▶ " + title;
-      player.play().catch(() => {
-        alert("Unable to play audio.");
-      });
-    }
-
     function setAudioTopic(topic, clicked) {
       currentAudioTopic = topic;
-
       document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
       clicked.classList.add("active");
-
       updateAudioFilters();
     }
 
@@ -770,7 +792,7 @@
         const matchesSearch = itemText.includes(searchValue);
 
         if (matchesTopic && matchesSearch) {
-          item.style.display = "block";
+          item.style.display = "";
           visibleCount++;
         } else {
           item.style.display = "none";
@@ -784,13 +806,11 @@
       const section = document.getElementById(sectionId);
       const items = section.querySelectorAll(".searchable-item");
       const noResults = document.getElementById(sectionId + "NoResults");
-
-      let visibleCount = 0;
       const searchText = query.trim().toLowerCase();
+      let visibleCount = 0;
 
       items.forEach(item => {
         const text = item.innerText.toLowerCase();
-
         if (text.includes(searchText)) {
           item.style.display = "";
           visibleCount++;
@@ -799,9 +819,7 @@
         }
       });
 
-      if (noResults) {
-        noResults.style.display = visibleCount === 0 ? "block" : "none";
-      }
+      noResults.style.display = visibleCount === 0 ? "block" : "none";
     }
 
     function openDetail(title, topic, type, description, author, guests, show, airDate, audioSrc, imageSrc) {
