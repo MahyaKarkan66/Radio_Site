@@ -22,7 +22,6 @@
       display: flex;
     }
 
-    /* Desktop sidebar */
     .sidebar {
       width: 240px;
       background: #ffffff;
@@ -64,15 +63,9 @@
       color: #0c7289;
     }
 
-    /* Main */
     .main-area {
       flex: 1;
       min-width: 0;
-    }
-
-    .top-hero {
-      height: 130px;
-      background: linear-gradient(180deg, #8dd3df 0%, #0c7289 100%);
     }
 
     .topbar {
@@ -140,7 +133,6 @@
       font-weight: 800;
     }
 
-    /* Mobile top tabs */
     .mobile-tabs {
       display: flex;
       border-top: 1px solid #e5e5e5;
@@ -164,7 +156,6 @@
       border-bottom-color: #1684a0;
     }
 
-    /* Mobile hamburger drawer */
     .drawer-overlay {
       position: fixed;
       inset: 0;
@@ -555,6 +546,42 @@
       cursor: pointer;
     }
 
+    .news-ticker {
+      background: #0c7289;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 20px 0;
+      min-height: 60px;
+      position: relative;
+    }
+
+    .ticker-track {
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+      width: max-content;
+      will-change: transform;
+      animation: tickerMove 35s linear infinite;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .ticker-item {
+      display: inline-block;
+      margin-right: 80px;
+      font-size: 18px;
+    }
+
+    @keyframes tickerMove {
+      from {
+        transform: translateX(100%);
+      }
+      to {
+        transform: translateX(-100%);
+      }
+    }
+
     @media (min-width: 900px) {
       .sidebar {
         display: block;
@@ -569,12 +596,6 @@
         max-width: 1100px;
         padding-left: 28px;
         padding-right: 28px;
-      }
-    }
-
-    @media (max-width: 899px) {
-      .top-hero {
-        height: 120px;
       }
     }
 
@@ -598,42 +619,6 @@
         bottom: 12px;
       }
     }
-   /* NEWS TICKER */
-.news-ticker {
-  background: #0c7289;
-  overflow: hidden;
-  white-space: nowrap;
-  padding: 20px 0;
-  min-height: 60px;
-  position: relative;
-}
-
-.ticker-track {
-  display: inline-flex;
-  align-items: center;
-  white-space: nowrap;
-  width: max-content;
-  will-change: transform;
-  animation: tickerMove 25s linear infinite;
-  color: white;
-  font-weight: 600;
-  font-size: 14px;
-}
-.ticker-item {
-  display: inline-block;
-  margin-right: 80px;
-  font-size: 18px;
-}
-
-
-@keyframes tickerMove {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(-100%);
-  }
-}
   </style>
 </head>
 <body>
@@ -656,7 +641,6 @@
   <div class="app-shell">
     <aside class="sidebar">
       <div class="sidebar-brand"><span>CJSF</span> LISTEN</div>
-
       <button class="sidebar-item active" id="sideHome" onclick="navigateToSection('home')">Home</button>
       <button class="sidebar-item" id="sideLive" onclick="navigateToSection('live')">Live</button>
       <button class="sidebar-item" id="sideAudio" onclick="navigateToSection('audio')">Audio</button>
@@ -667,8 +651,8 @@
 
     <div class="main-area">
       <div class="news-ticker">
-  <div class="ticker-track" id="tickerTrack"></div>
-</div>
+        <div class="ticker-track" id="tickerTrack"></div>
+      </div>
 
       <div class="topbar">
         <div class="topbar-row">
@@ -676,9 +660,7 @@
             <button class="hamburger-btn" onclick="openDrawer()">☰</button>
             <button class="icon-btn">⌕</button>
           </div>
-
           <div class="brand"><span>CJSF</span> LISTEN</div>
-
           <div class="topbar-right">
             <div class="location">VAN ▼</div>
           </div>
@@ -691,7 +673,6 @@
       </div>
 
       <div class="content">
-        <!-- HOME -->
         <div id="homeSection" class="section active">
           <div class="hero-card">
             <h1>CJSF Audio & Content</h1>
@@ -715,7 +696,6 @@
           <div class="card-grid" id="homeFeaturedContainer"></div>
         </div>
 
-        <!-- LIVE -->
         <div id="liveSection" class="section">
           <div class="hero-card">
             <h1>Live Radio</h1>
@@ -732,7 +712,6 @@
           </div>
         </div>
 
-        <!-- AUDIO -->
         <div id="audioSection" class="section">
           <div class="section-header">
             <h2>Audio</h2>
@@ -748,13 +727,14 @@
             />
             <div class="no-results" id="audioSectionNoResults">No matching content found.</div>
           </div>
+
           <div class="form-group" style="margin-bottom: 18px;">
-  <label for="audioSortSelect">Sort by Date</label>
-  <select id="audioSortSelect">
-    <option value="newest">Newest First</option>
-    <option value="oldest">Oldest First</option>
-  </select>
-</div>
+            <label for="audioSortSelect">Sort by Date</label>
+            <select id="audioSortSelect">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+            </select>
+          </div>
 
           <div class="filters">
             <button class="filter-btn active" onclick="setAudioTopic('all', this)">All</button>
@@ -767,7 +747,6 @@
           <div class="card-grid" id="audioContainer"></div>
         </div>
 
-        <!-- NEWS -->
         <div id="newsSection" class="section">
           <div class="section-header">
             <h2>News</h2>
@@ -786,7 +765,6 @@
           <div id="newsContainer"></div>
         </div>
 
-        <!-- ARCHIVE -->
         <div id="archiveSection" class="section">
           <div class="section-header">
             <h2>Archive</h2>
@@ -805,7 +783,6 @@
           <div id="archiveContainer"></div>
         </div>
 
-        <!-- UPLOAD -->
         <div id="uploadSection" class="section">
           <div class="hero-card">
             <h1>Upload Audio</h1>
@@ -896,7 +873,7 @@
 
               <div class="btn-row">
                 <button class="btn btn-primary" id="saveDraftBtn" type="button">Save Draft</button>
-                 <button class="btn btn-light" id="clearUploadBtn" type="button">Clear</button>
+                <button class="btn btn-light" id="clearUploadBtn" type="button">Clear</button>
               </div>
             </div>
           </div>
@@ -1032,42 +1009,15 @@
     ];
 
     const newsData = [
-      {
-        title: "Film Review",
-        description: "A text-based review post with image support for A&E content."
-      },
-      {
-        title: "Campus News Update",
-        description: "A discoverable news post that can sit alongside audio content."
-      },
-      {
-        title: "Community Headlines",
-        description: "Important local and campus updates highlighted in a simple, readable format."
-      }
+      { title: "Film Review", description: "A text-based review post with image support for A&E content." },
+      { title: "Campus News Update", description: "A discoverable news post that can sit alongside audio content." },
+      { title: "Community Headlines", description: "Important local and campus updates highlighted in a simple, readable format." }
     ];
 
     const archiveData = [
-      {
-        title: "Speak Up!",
-        episode: "April 6 Episode",
-        description: "Local politics discussion",
-        date: "April 6, 2026",
-        audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-      },
-      {
-        title: "Studio 6",
-        episode: "Live Session",
-        description: "Local band performance",
-        date: "April 2, 2026",
-        audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
-      },
-      {
-        title: "Boom Bap",
-        episode: "Hip Hop Hour",
-        description: "Underground hip hop showcase",
-        date: "March 30, 2026",
-        audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
-      }
+      { title: "Speak Up!", episode: "April 6 Episode", description: "Local politics discussion", date: "April 6, 2026", audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+      { title: "Studio 6", episode: "Live Session", description: "Local band performance", date: "April 2, 2026", audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+      { title: "Boom Bap", episode: "Hip Hop Hour", description: "Underground hip hop showcase", date: "March 30, 2026", audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
     ];
 
     function setActiveNav(section) {
@@ -1075,15 +1025,8 @@
       document.querySelectorAll(".sidebar-item").forEach(item => item.classList.remove("active"));
       document.querySelectorAll(".drawer-item").forEach(item => item.classList.remove("active"));
 
-      if (section === "home") {
-        const tab = document.getElementById("tabHome");
-        if (tab) tab.classList.add("active");
-      }
-
-      if (section === "live") {
-        const tab = document.getElementById("tabLive");
-        if (tab) tab.classList.add("active");
-      }
+      if (section === "home") document.getElementById("tabHome")?.classList.add("active");
+      if (section === "live") document.getElementById("tabLive")?.classList.add("active");
 
       const sideMap = {
         home: "sideHome",
@@ -1103,11 +1046,8 @@
         upload: "drawerUpload"
       };
 
-      const sideItem = document.getElementById(sideMap[section]);
-      const drawerItem = document.getElementById(drawerMap[section]);
-
-      if (sideItem) sideItem.classList.add("active");
-      if (drawerItem) drawerItem.classList.add("active");
+      document.getElementById(sideMap[section])?.classList.add("active");
+      document.getElementById(drawerMap[section])?.classList.add("active");
     }
 
     function showSection(section) {
@@ -1154,10 +1094,11 @@
     function capitalize(text) {
       return text.charAt(0).toUpperCase() + text.slice(1);
     }
+
     function parseDateString(dateString) {
-  const parsed = new Date(dateString);
-  return isNaN(parsed) ? new Date(0) : parsed;
-}
+      const parsed = new Date(dateString);
+      return isNaN(parsed) ? new Date(0) : parsed;
+    }
 
     function renderFeaturedAudio() {
       const container = document.getElementById("homeFeaturedContainer");
@@ -1208,47 +1149,47 @@
     }
 
     function renderAudio() {
-  const container = document.getElementById("audioContainer");
-  container.innerHTML = "";
+      const container = document.getElementById("audioContainer");
+      container.innerHTML = "";
 
-  const sortedAudio = [...audioData].sort((a, b) => {
-    const dateA = parseDateString(a.uploadDate);
-    const dateB = parseDateString(b.uploadDate);
+      const sortedAudio = [...audioData].sort((a, b) => {
+        const dateA = parseDateString(a.uploadDate);
+        const dateB = parseDateString(b.uploadDate);
 
-    if (currentAudioSort === "newest") {
-      return dateB - dateA;
-    } else {
-      return dateA - dateB;
+        if (currentAudioSort === "newest") {
+          return dateB - dateA;
+        } else {
+          return dateA - dateB;
+        }
+      });
+
+      sortedAudio.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "audio-card audio-item searchable-item";
+        card.setAttribute("data-topic", item.topic);
+
+        card.innerHTML = `
+          <img src="${item.image}" alt="${item.title}">
+          <div class="audio-card-body">
+            <h3>${item.title}</h3>
+            <p>${item.shortDescription}</p>
+            <div class="tag-row">
+              <span class="tag">${capitalize(item.topic)}</span>
+              <span class="tag">${item.audioType}</span>
+            </div>
+            <div class="btn-row">
+              <button class="btn btn-light">Play</button>
+            </div>
+          </div>
+        `;
+
+        card.querySelector(".btn-light").addEventListener("click", () => {
+          playAudio(item.title, item.audio);
+        });
+
+        container.appendChild(card);
+      });
     }
-  });
-
-  sortedAudio.forEach(item => {
-    const card = document.createElement("div");
-    card.className = "audio-card audio-item searchable-item";
-    card.setAttribute("data-topic", item.topic);
-
-    card.innerHTML = `
-      <img src="${item.image}" alt="${item.title}">
-      <div class="audio-card-body">
-        <h3>${item.title}</h3>
-        <p>${item.shortDescription}</p>
-        <div class="tag-row">
-          <span class="tag">${capitalize(item.topic)}</span>
-          <span class="tag">${item.audioType}</span>
-        </div>
-        <div class="btn-row">
-          <button class="btn btn-light">Play</button>
-        </div>
-      </div>
-    `;
-
-    card.querySelector(".btn-light").addEventListener("click", () => {
-      playAudio(item.title, item.audio);
-    });
-
-    container.appendChild(card);
-  });
-}
 
     function renderNews() {
       const container = document.getElementById("newsContainer");
@@ -1277,9 +1218,7 @@
           <h3>${item.title}</h3>
           <p><strong>${item.episode}</strong></p>
           <p>${item.description}</p>
-          <div class="meta">
-            Date: ${item.date}
-          </div>
+          <div class="meta">Date: ${item.date}</div>
           <div class="btn-row" style="margin-top:12px;">
             <button class="btn btn-light">Play</button>
           </div>
@@ -1292,15 +1231,15 @@
         container.appendChild(card);
       });
     }
+
     function renderTicker() {
-  const track = document.getElementById("tickerTrack");
+      const track = document.getElementById("tickerTrack");
+      const tickerHTML = newsData
+        .map(item => `<span class="ticker-item">🔊 ${item.title}</span>`)
+        .join("");
 
-  const tickerHTML = newsData
-    .map(item => `<span class="ticker-item">🔊 ${item.title}</span>`)
-    .join("");
-
-  track.innerHTML = tickerHTML + tickerHTML;
-}
+      track.innerHTML = tickerHTML + tickerHTML;
+    }
 
     function setAudioTopic(topic, clicked) {
       currentAudioTopic = topic;
@@ -1383,66 +1322,68 @@
       playAudio(document.getElementById("detailTitle").innerText, currentDetailAudio);
       closeDetail();
     }
+
     function clearUploadForm() {
-  document.getElementById("uploadTitle").value = "";
-  document.getElementById("uploadShortDescription").value = "";
-  document.getElementById("uploadBody").value = "";
-  document.getElementById("uploadAudioFile").value = "";
-  document.getElementById("uploadImage").value = "";
-  document.getElementById("uploadAuthor").value = "";
-  document.getElementById("uploadGuests").value = "";
-  document.getElementById("uploadShow").value = "";
-  document.getElementById("uploadFirstAirDate").value = "";
-  document.getElementById("uploadDate").value = "";
-  document.getElementById("uploadTopic").selectedIndex = 0;
-  document.getElementById("uploadAudioType").selectedIndex = 0;
-}
+      document.getElementById("uploadTitle").value = "";
+      document.getElementById("uploadShortDescription").value = "";
+      document.getElementById("uploadBody").value = "";
+      document.getElementById("uploadAudioFile").value = "";
+      document.getElementById("uploadImage").value = "";
+      document.getElementById("uploadAuthor").value = "";
+      document.getElementById("uploadGuests").value = "";
+      document.getElementById("uploadShow").value = "";
+      document.getElementById("uploadFirstAirDate").value = "";
+      document.getElementById("uploadDate").value = "";
+      document.getElementById("uploadTopic").selectedIndex = 0;
+      document.getElementById("uploadAudioType").selectedIndex = 0;
+    }
 
-function saveDraftAudio() {
-  const title = document.getElementById("uploadTitle").value.trim();
-  const shortDescription = document.getElementById("uploadShortDescription").value.trim();
-  const body = document.getElementById("uploadBody").value.trim();
-  const author = document.getElementById("uploadAuthor").value.trim();
-  const guests = document.getElementById("uploadGuests").value.trim();
-  const show = document.getElementById("uploadShow").value.trim();
-  const firstAirDate = document.getElementById("uploadFirstAirDate").value;
-  const uploadDate = document.getElementById("uploadDate").value;
-  const topic = document.getElementById("uploadTopic").value;
-  const audioType = document.getElementById("uploadAudioType").value;
+    function saveDraftAudio() {
+      const title = document.getElementById("uploadTitle").value.trim();
+      const shortDescription = document.getElementById("uploadShortDescription").value.trim();
+      const body = document.getElementById("uploadBody").value.trim();
+      const author = document.getElementById("uploadAuthor").value.trim();
+      const guests = document.getElementById("uploadGuests").value.trim();
+      const show = document.getElementById("uploadShow").value.trim();
+      const firstAirDate = document.getElementById("uploadFirstAirDate").value;
+      const uploadDate = document.getElementById("uploadDate").value;
+      const topic = document.getElementById("uploadTopic").value;
+      const audioType = document.getElementById("uploadAudioType").value;
 
-  if (!title || !shortDescription || !body) {
-    alert("Please fill in at least Title, Short Description, and Description.");
-    return;
-  }
+      if (!title || !shortDescription || !body) {
+        alert("Please fill in at least Title, Short Description, and Description.");
+        return;
+      }
 
-  const newAudioItem = {
-    title: title,
-    shortDescription: shortDescription,
-    body: body,
-    topic: topic.toLowerCase(),
-    audioType: audioType,
-    author: author || "Unknown Author",
-    guests: guests || "N/A",
-    show: show || "Unknown Show",
-    firstAirDate: firstAirDate || "Not set",
-    uploadDate: uploadDate || "Not set",
-    audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-    image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1200&auto=format&fit=crop"
-  };
+      const newAudioItem = {
+        title: title,
+        shortDescription: shortDescription,
+        body: body,
+        topic: topic.toLowerCase(),
+        audioType: audioType,
+        author: author || "Unknown Author",
+        guests: guests || "N/A",
+        show: show || "Unknown Show",
+        firstAirDate: firstAirDate || "Not set",
+        uploadDate: uploadDate || "Not set",
+        audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+        image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1200&auto=format&fit=crop"
+      };
 
-  audioData.unshift(newAudioItem);
-  renderAudio();
-  updateAudioFilters();
-  clearUploadForm();
-  showSection("audio");
-}
-document.getElementById("saveDraftBtn").addEventListener("click", saveDraftAudio);
-document.getElementById("clearUploadBtn").addEventListener("click", clearUploadForm);
-document.getElementById("audioSortSelect").addEventListener("change", function () {
-  currentAudioSort = this.value;
-  renderAudio();
-  updateAudioFilters();
-};
+      audioData.unshift(newAudioItem);
+      renderAudio();
+      updateAudioFilters();
+      clearUploadForm();
+      showSection("audio");
+    }
+
+    document.getElementById("saveDraftBtn").addEventListener("click", saveDraftAudio);
+    document.getElementById("clearUploadBtn").addEventListener("click", clearUploadForm);
+    document.getElementById("audioSortSelect").addEventListener("change", function () {
+      currentAudioSort = this.value;
+      renderAudio();
+      updateAudioFilters();
+    });
 
     renderFeaturedAudio();
     renderAudio();
