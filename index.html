@@ -1375,10 +1375,14 @@
       };
 
       audioData.unshift(newAudioItem);
-      renderAudio();
-      updateAudioFilters();
-      clearUploadForm();
-      showSection("audio");
+
+currentAudioSort = "newest";
+document.getElementById("audioSortSelect").value = "newest";
+
+renderAudio();
+updateAudioFilters();
+clearUploadForm();
+showSection("audio");
     }
 
     document.getElementById("saveDraftBtn").addEventListener("click", saveDraftAudio);
