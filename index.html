@@ -661,9 +661,7 @@
             <button class="icon-btn">⌕</button>
           </div>
           <div class="brand"><span>CJSF</span> LISTEN</div>
-          <div class="topbar-right">
-            <div class="location">VAN ▼</div>
-          </div>
+          <div class="topbar-right"></div>
         </div>
 
         <div class="mobile-tabs">
@@ -1095,10 +1093,16 @@
       return text.charAt(0).toUpperCase() + text.slice(1);
     }
 
-    function parseDateString(dateString) {
-      const parsed = new Date(dateString);
-      return isNaN(parsed) ? new Date(0) : parsed;
-    }
+     function parseDateString(dateString) {
+  if (!dateString) return new Date(0);
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+    return new Date(dateString + "T00:00:00");
+  }
+
+  const parsed = new Date(dateString);
+  return isNaN(parsed) ? new Date(0) : parsed;
+}
 
     function renderFeaturedAudio() {
       const container = document.getElementById("homeFeaturedContainer");
