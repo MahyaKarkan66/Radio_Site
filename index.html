@@ -1182,7 +1182,8 @@
               <span class="tag">${item.audioType}</span>
             </div>
             <div class="btn-row">
-              <button class="btn btn-light">Play</button>
+               <button class="btn btn-primary">Open Detail</button>
+               <button class="btn btn-light">Play</button>
             </div>
           </div>
         `;
@@ -1190,6 +1191,21 @@
         card.querySelector(".btn-light").addEventListener("click", () => {
           playAudio(item.title, item.audio);
         });
+        card.querySelector(".btn-primary").addEventListener("click", () => {
+  openDetail(
+    item.title,
+    capitalize(item.topic),
+    item.audioType,
+    item.body,
+    item.author,
+    item.guests,
+    item.show,
+    item.firstAirDate,
+    item.uploadDate,
+    item.audio,
+    item.image
+  );
+});
 
         container.appendChild(card);
       });
