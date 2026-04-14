@@ -888,8 +888,8 @@
               </div>
 
               <div class="btn-row">
-                <button class="btn btn-primary" type="button">Save Draft</button>
-                <button class="btn btn-light" type="button">Clear</button>
+                <button class="btn btn-primary" id="saveDraftBtn" type="button">Save Draft</button>
+                 <button class="btn btn-light" id="clearUploadBtn" type="button">Clear</button>
               </div>
             </div>
           </div>
@@ -1360,6 +1360,61 @@
       playAudio(document.getElementById("detailTitle").innerText, currentDetailAudio);
       closeDetail();
     }
+    function clearUploadForm() {
+  document.getElementById("uploadTitle").value = "";
+  document.getElementById("uploadShortDescription").value = "";
+  document.getElementById("uploadBody").value = "";
+  document.getElementById("uploadAudioFile").value = "";
+  document.getElementById("uploadImage").value = "";
+  document.getElementById("uploadAuthor").value = "";
+  document.getElementById("uploadGuests").value = "";
+  document.getElementById("uploadShow").value = "";
+  document.getElementById("uploadFirstAirDate").value = "";
+  document.getElementById("uploadDate").value = "";
+  document.getElementById("uploadTopic").selectedIndex = 0;
+  document.getElementById("uploadAudioType").selectedIndex = 0;
+}
+
+function saveDraftAudio() {
+  const title = document.getElementById("uploadTitle").value.trim();
+  const shortDescription = document.getElementById("uploadShortDescription").value.trim();
+  const body = document.getElementById("uploadBody").value.trim();
+  const author = document.getElementById("uploadAuthor").value.trim();
+  const guests = document.getElementById("uploadGuests").value.trim();
+  const show = document.getElementById("uploadShow").value.trim();
+  const firstAirDate = document.getElementById("uploadFirstAirDate").value;
+  const uploadDate = document.getElementById("uploadDate").value;
+  const topic = document.getElementById("uploadTopic").value;
+  const audioType = document.getElementById("uploadAudioType").value;
+
+  if (!title || !shortDescription || !body) {
+    alert("Please fill in at least Title, Short Description, and Description.");
+    return;
+  }
+
+  const newAudioItem = {
+    title: title,
+    shortDescription: shortDescription,
+    body: body,
+    topic: topic.toLowerCase(),
+    audioType: audioType,
+    author: author || "Unknown Author",
+    guests: guests || "N/A",
+    show: show || "Unknown Show",
+    firstAirDate: firstAirDate || "Not set",
+    uploadDate: uploadDate || "Not set",
+    audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1200&auto=format&fit=crop"
+  };
+
+  audioData.unshift(newAudioItem);
+  renderAudio();
+  updateAudioFilters();
+  clearUploadForm();
+  showSection("audio");
+}
+document.getElementById("saveDraftBtn").addEventListener("click", saveDraftAudio);
+document.getElementById("clearUploadBtn").addEventListener("click", clearUploadForm);
 
     renderFeaturedAudio();
     renderAudio();
