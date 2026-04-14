@@ -901,7 +901,7 @@
       noResults.style.display = visibleCount === 0 ? "block" : "none";
     }
 
-    function openDetail(title, topic, type, description, author, guests, show, airDate, uploadDate, audioSrc, imageSrc)  {
+     function openDetail(title, topic, type, description, author, guests, show, firstAirDate, uploadDate, audioSrc, imageSrc) {
       document.getElementById("detailTitle").innerText = title;
       document.getElementById("detailTopic").innerText = topic;
       document.getElementById("detailType").innerText = type;
@@ -909,6 +909,7 @@
       document.getElementById("detailAuthor").innerText = author;
       document.getElementById("detailGuests").innerText = guests;
       document.getElementById("detailShow").innerText = show;
+       document.getElementById("detailAirDate").innerText = firstAirDate;
       document.getElementById("detailUploadDate").innerText = uploadDate;
       document.getElementById("detailImage").src = imageSrc;
       currentDetailAudio = audioSrc;
