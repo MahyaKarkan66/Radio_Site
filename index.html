@@ -598,19 +598,22 @@
         bottom: 12px;
       }
     }
-    /* NEWS TICKER */
+   /* NEWS TICKER */
 .news-ticker {
   background: #0c7289;
   overflow: hidden;
-  white-space: nowrap;
-  padding: 10px 0;
   position: relative;
+  width: 100%;
+  padding: 10px 0;
 }
 
 .ticker-track {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   white-space: nowrap;
-  animation: tickerMove 20s linear infinite;
+  width: max-content;
+  will-change: transform;
+  animation: tickerMove 18s linear infinite;
   color: white;
   font-weight: 600;
   font-size: 14px;
@@ -619,13 +622,14 @@
 .ticker-item {
   display: inline-block;
   margin-right: 50px;
+  flex-shrink: 0;
 }
 
 @keyframes tickerMove {
-  0% {
+  from {
     transform: translateX(100%);
   }
-  100% {
+  to {
     transform: translateX(-100%);
   }
 }
@@ -1267,9 +1271,11 @@
     function renderTicker() {
   const track = document.getElementById("tickerTrack");
 
-  track.innerHTML = newsData
-    .map(item => `🔊 ${item.title}`)
-    .join("   •   ");
+  const tickerHTML = newsData
+    .map(item => `<span class="ticker-item">🔊 ${item.title}</span>`)
+    .join("");
+
+  track.innerHTML = tickerHTML + tickerHTML;
 }
 
     function setAudioTopic(topic, clicked) {
