@@ -712,7 +712,7 @@
 
         <div id="audioSection" class="section">
           <div class="section-header">
-            <h2>Audio</h2>
+            <h2 id="audioTitle">Audio</h2>
           </div>
 
           <div class="search-wrap">
@@ -1265,6 +1265,8 @@
       currentAudioTopic = topic;
       document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
       clicked.classList.add("active");
+      document.getElementById("audioTitle").innerText =
+     topic === "all" ? "Audio" : capitalize(topic) + " Audio";
       updateAudioFilters();
     }
 
