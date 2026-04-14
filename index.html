@@ -602,9 +602,10 @@
 .news-ticker {
   background: #0c7289;
   overflow: hidden;
+  white-space: nowrap;
+  padding: 20px 0;
+  min-height: 60px;
   position: relative;
-  width: 100%;
-  padding: 10px 0;
 }
 
 .ticker-track {
@@ -618,12 +619,12 @@
   font-weight: 600;
   font-size: 14px;
 }
-
 .ticker-item {
   display: inline-block;
-  margin-right: 50px;
-  flex-shrink: 0;
+  margin-right: 80px;
+  font-size: 18px;
 }
+
 
 @keyframes tickerMove {
   from {
