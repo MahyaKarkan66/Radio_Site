@@ -28,7 +28,6 @@
 
     .topbar {
       background: #f7f7f7;
-      margin-top: -1px;
       padding: 18px 20px 10px;
       border-bottom: 1px solid #dddddd;
     }
@@ -67,18 +66,22 @@
 
     .tabs {
       display: flex;
+      overflow-x: auto;
       border-top: 1px solid #e5e5e5;
       padding-top: 10px;
+      gap: 4px;
     }
 
     .tab {
       flex: 1;
+      min-width: 90px;
       text-align: center;
       padding: 14px 8px;
       cursor: pointer;
       color: #111;
       font-weight: 600;
       border-bottom: 3px solid transparent;
+      white-space: nowrap;
     }
 
     .tab.active {
@@ -111,14 +114,6 @@
       margin: 0;
       font-size: 28px;
       color: #1684a0;
-    }
-
-    .section-header .small-action {
-      font-size: 14px;
-      color: #333;
-      background: none;
-      border: none;
-      cursor: pointer;
     }
 
     .search-wrap {
@@ -295,6 +290,24 @@
       line-height: 1.5;
     }
 
+    .live-box {
+      background: #fff;
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+
+    .live-badge {
+      display: inline-block;
+      margin-bottom: 12px;
+      background: #d93025;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
     .player {
       position: fixed;
       left: 20px;
@@ -399,6 +412,7 @@
 
       <div class="tabs">
         <div class="tab active" onclick="showSection('home', this)">Home</div>
+        <div class="tab" onclick="showSection('live', this)">Live</div>
         <div class="tab" onclick="showSection('audio', this)">Audio</div>
         <div class="tab" onclick="showSection('news', this)">News</div>
         <div class="tab" onclick="showSection('archive', this)">Archive</div>
@@ -412,13 +426,9 @@
           <h1>CJSF Audio & Content</h1>
           <p>Discover featured audio, interviews, performances, reviews, and the latest community content in one place.</p>
         </div>
-        <button class="btn btn-primary" onclick="openLiveStream()" style="margin-bottom:20px;">
-  🔴 Listen Live
-</button>
 
         <div class="section-header">
           <h2>Featured Audio</h2>
-          <button class="small-action">Hide</button>
         </div>
 
         <div class="search-wrap">
@@ -432,6 +442,23 @@
         </div>
 
         <div class="card-grid" id="homeFeaturedContainer"></div>
+      </div>
+
+      <!-- LIVE -->
+      <div id="liveSection" class="section">
+        <div class="hero-card">
+          <h1>Live Radio</h1>
+          <p>Listen to the CJSF live stream.</p>
+        </div>
+
+        <div class="live-box">
+          <div class="live-badge">LIVE</div>
+          <h3 style="margin-top:0;">CJSF 90.1 FM</h3>
+          <p style="margin-bottom:14px;">For now, this opens the live streaming page in a new tab.</p>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="openLiveStream()">Open Live Stream</button>
+          </div>
+        </div>
       </div>
 
       <!-- AUDIO -->
@@ -643,6 +670,10 @@
       }
     }
 
+    function openLiveStream() {
+      window.open("http://www.cjsf.ca/streaming", "_blank");
+    }
+
     function playAudio(title, src) {
       const player = document.getElementById("audioPlayer");
       const nowPlaying = document.getElementById("nowPlaying");
@@ -651,9 +682,7 @@
       player.play().catch(() => {
         alert("Unable to play audio.");
       });
-    function openLiveStream() {
-  window.open("http://www.cjsf.ca/streaming", "_blank");
-}
+    }
 
     function capitalize(text) {
       return text.charAt(0).toUpperCase() + text.slice(1);
