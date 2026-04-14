@@ -1223,7 +1223,31 @@
   });
 
   sortedAudio.forEach(item => {
-      });
+    const card = document.createElement("div");
+    card.className = "audio-card audio-item searchable-item";
+    card.setAttribute("data-topic", item.topic);
+
+    card.innerHTML = `
+      <img src="${item.image}" alt="${item.title}">
+      <div class="audio-card-body">
+        <h3>${item.title}</h3>
+        <p>${item.shortDescription}</p>
+        <div class="tag-row">
+          <span class="tag">${capitalize(item.topic)}</span>
+          <span class="tag">${item.audioType}</span>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-light">Play</button>
+        </div>
+      </div>
+    `;
+
+    card.querySelector(".btn-light").addEventListener("click", () => {
+      playAudio(item.title, item.audio);
+    });
+
+    container.appendChild(card);
+  });
 }
 
     function renderNews() {
@@ -1418,7 +1442,7 @@ document.getElementById("audioSortSelect").addEventListener("change", function (
   currentAudioSort = this.value;
   renderAudio();
   updateAudioFilters();
-} I'm);
+};
 
     renderFeaturedAudio();
     renderAudio();
