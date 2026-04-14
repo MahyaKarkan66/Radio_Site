@@ -412,6 +412,9 @@
           <h1>CJSF Audio & Content</h1>
           <p>Discover featured audio, interviews, performances, reviews, and the latest community content in one place.</p>
         </div>
+        <button class="btn btn-primary" onclick="openLiveStream()" style="margin-bottom:20px;">
+  🔴 Listen Live
+</button>
 
         <div class="section-header">
           <h2>Featured Audio</h2>
@@ -648,7 +651,9 @@
       player.play().catch(() => {
         alert("Unable to play audio.");
       });
-    }
+    function openLiveStream() {
+  window.open("http://www.cjsf.ca/streaming", "_blank");
+}
 
     function capitalize(text) {
       return text.charAt(0).toUpperCase() + text.slice(1);
