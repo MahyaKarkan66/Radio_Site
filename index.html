@@ -1353,57 +1353,97 @@ function loadAudioDataFromStorage() {
       document.getElementById("uploadTopic").selectedIndex = 0;
       document.getElementById("uploadAudioType").selectedIndex = 0;
     }
-
-    function saveDraftAudio() {
-      const title = document.getElementById("uploadTitle").value.trim();
-      const shortDescription = document.getElementById("uploadShortDescription").value.trim();
-      const body = document.getElementById("uploadBody").value.trim();
-      const author = document.getElementById("uploadAuthor").value.trim();
-      const guests = document.getElementById("uploadGuests").value.trim();
-      const show = document.getElementById("uploadShow").value.trim();
-      const firstAirDate = document.getElementById("uploadFirstAirDate").value;
-      const uploadDate = document.getElementById("uploadDate").value;
-      const topic = document.getElementById("uploadTopic").value;
-      const audioType = document.getElementById("uploadAudioType").value;
-      const audioFile = document.getElementById("uploadAudioFile").files[0];
-      const imageFile = document.getElementById("uploadImage").files[0];
-
-      const audioUrl = audioFile ? URL.createObjectURL(audioFile) : "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
-      const imageUrl = imageFile ? URL.createObjectURL(imageFile) : "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1200&auto=format&fit=crop";
-
-      if (!title || !shortDescription || !body) {
-        alert("Please fill in at least Title, Short Description, and Description.");
-        return;
-      }
-
-      const newAudioItem = {
-        title: title,
-        shortDescription: shortDescription,
-        body: body,
-        topic: topic.toLowerCase(),
-        audioType: audioType,
-        author: author || "Unknown Author",
-        guests: guests || "N/A",
-        show: show || "Unknown Show",
-        firstAirDate: firstAirDate || "Not set",
-        uploadDate: uploadDate || "Not set",
-        audio: audioUrl,
-        image: imageUrl
-      };
-
-      audioData.unshift(newAudioItem);
-
-      currentAudioSort = "newest";
-      document.getElementById("audioSortSelect").value = "newest";
-
-audioData.unshift(newAudioItem);
-saveAudioDataToStorage();
-renderFeaturedAudio();
-renderAudio();
-updateAudioFilters();
-clearUploadForm();
-showSection("audio");
+    function fileToDataURL(file) {
+  return new Promise((resolve, reject) => {
+    if (!file) {
+      resolve(null);
+      return;
     }
+
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error("File read failed"));
+    reader.readAsDataURL(file);
+  });
+}
+
+    async function saveDraftAudio() {
+  const title = document.getElementById("uploadTitle").value.trim();
+  const shortDescription = document.getElementById("uploadShortDescription").value.trim();
+  const body = document.getElementById("uploadBody").value.trim();
+  const author = document.getElementById("uploadAuthor").value.trim();
+  const guests = document.getElementById("uploadGuests").value.trim();
+  const show = document.getElementById("uploadShow").value.trim();
+
+  const firstAirDateInput = document.getElementById("uploadFirstAirDate").value;
+  const uploadDateInput = document.getElementById("uploadDate").value;
+
+  const topic = document.getElementById("uploadTopic").value;
+  const audioType = document.getElementById("uploadAudioType").value;
+
+  const audioFile = document.getElementById("uploadAudioFile").files[0];
+  const imageFile = document.getElementById("uploadImage").files[0];
+
+  if (!title || !shortDescription || !body) {
+    alert("Please fill in at least Title, Short Description, and Description.");
+    return;
+  }
+
+  const firstAirDate = firstAirDateInput
+    ? new Date(firstAirDateInput + "T00:00:00").toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      })
+    : "Not set";
+
+  const uploadDate = uploadDateInput
+    ? new Date(uploadDateInput + "T00:00:00").toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      })
+    : new Date().toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
+
+  const audioUrl = audioFile
+    ? await fileToDataURL(audioFile)
+    : "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+
+  const imageUrl = imageFile
+    ? await fileToDataURL(imageFile)
+    : "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1200&auto=format&fit=crop";
+
+  const newAudioItem = {
+    title: title,
+    shortDescription: shortDescription,
+    body: body,
+    topic: topic.toLowerCase(),
+    audioType: audioType,
+    author: author || "Unknown Author",
+    guests: guests || "N/A",
+    show: show || "Unknown Show",
+    firstAirDate: firstAirDate,
+    uploadDate: uploadDate,
+    audio: audioUrl,
+    image: imageUrl
+  };
+
+  audioData.unshift(newAudioItem);
+
+  currentAudioSort = "newest";
+  document.getElementById("audioSortSelect").value = "newest";
+
+  saveAudioDataToStorage();
+  renderFeaturedAudio();
+  renderAudio();
+  updateAudioFilters();
+  clearUploadForm();
+  showSection("audio");
+}
 
     document.getElementById("saveDraftBtn").addEventListener("click", saveDraftAudio);
     document.getElementById("clearUploadBtn").addEventListener("click", clearUploadForm);
