@@ -915,39 +915,11 @@
     let currentAudioTopic = "all";
     let currentSection = "home";
     let currentAudioSort = "newest";
+    const AUDIO_STORAGE_KEY = "cjsf_audio_data";
 
-    const featuredAudioData = [
-      {
-        title: "Local Music Interview",
-        shortDescription: "A featured artist interview highlighted on the homepage.",
-        body: "This featured audio item highlights a local musician interview and shows how homepage content can be surfaced in an organized way.",
-        topic: "Music",
-        audioType: "Interview",
-        author: "A&E Team",
-        guests: "Indie Artist Collective",
-        show: "Morning Mix",
-        firstAirDate: "April 3, 2026",
-        uploadDate: "April 8, 2026",
-        audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-        image: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop"
-      },
-      {
-        title: "Live Comedy Segment",
-        shortDescription: "A short audio feature that is easy to discover and share.",
-        body: "A featured comedy performance clip intended to be easy to find, categorize, and play from the homepage.",
-        topic: "Comedy",
-        audioType: "Performance",
-        author: "Station Team",
-        guests: "Guest Comedian",
-        show: "Late Night Hour",
-        firstAirDate: "April 6, 2026",
-        uploadDate: "April 9, 2026",
-        audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-        image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1200&auto=format&fit=crop"
-      }
-    ];
+    
 
-    const audioData = [
+    let audioData = [
       {
         title: "Artist Interview",
         shortDescription: "Interview with a local artist about a new release.",
@@ -1103,12 +1075,34 @@
   const parsed = new Date(dateString);
   return isNaN(parsed) ? new Date(0) : parsed;
 }
+    function saveAudioDataToStorage() {
+  localStorage.setItem(AUDIO_STORAGE_KEY, JSON.stringify(audioData));
+}
+
+function loadAudioDataFromStorage() {
+  const stored = localStorage.getItem(AUDIO_STORAGE_KEY);
+  if (!stored) return;
+
+  try {
+    const parsed = JSON.parse(stored);
+    if (Array.isArray(parsed) && parsed.length > 0) {
+      audioData = parsed;
+    }
+  } catch (error) {
+    console.error("Failed to load stored audio data:", error);
+  }
+}
+    function getFeaturedAudio() {
+  return [...audioData]
+    .sort((a, b) => parseDateString(b.uploadDate) - parseDateString(a.uploadDate))
+    .slice(0, 2);
+}
 
     function renderFeaturedAudio() {
       const container = document.getElementById("homeFeaturedContainer");
       container.innerHTML = "";
 
-      featuredAudioData.forEach(item => {
+       getFeaturedAudio().forEach(item => {
         const card = document.createElement("div");
         card.className = "audio-card searchable-item";
 
@@ -1402,6 +1396,9 @@
       currentAudioSort = "newest";
       document.getElementById("audioSortSelect").value = "newest";
 
+audioData.unshift(newAudioItem);
+saveAudioDataToStorage();
+renderFeaturedAudio();
 renderAudio();
 updateAudioFilters();
 clearUploadForm();
@@ -1416,12 +1413,13 @@ showSection("audio");
       updateAudioFilters();
     });
 
-    renderFeaturedAudio();
-    renderAudio();
-    renderNews();
-    renderArchive();
-    renderTicker();
-    setActiveNav("home");
+    loadAudioDataFromStorage();
+renderFeaturedAudio();
+renderAudio();
+renderNews();
+renderArchive();
+renderTicker();
+setActiveNav("home");
   </script>
 </body>
 </html>
