@@ -1175,16 +1175,20 @@ function loadAudioDataFromStorage() {
               <span class="tag">${capitalize(item.topic)}</span>
               <span class="tag">${item.audioType}</span>
             </div>
-            <div class="btn-row">
-               <button class="btn btn-primary">Open Detail</button>
-               <button class="btn btn-light">Play</button>
-            </div>
+             <div class="btn-row">
+                <button class="btn btn-primary">Open Detail</button>
+                <button class="btn btn-light">Play</button>
+                <button class="btn btn-light delete-btn">Delete</button>
+             </div>
           </div>
         `;
 
         card.querySelector(".btn-light").addEventListener("click", () => {
           playAudio(item.title, item.audio);
         });
+        card.querySelector(".delete-btn").addEventListener("click", () => {
+  deleteAudio(item);
+});
         card.querySelector(".btn-primary").addEventListener("click", () => {
   openDetail(
     item.title,
@@ -1443,6 +1447,18 @@ function loadAudioDataFromStorage() {
   updateAudioFilters();
   clearUploadForm();
   showSection("audio");
+}
+    function deleteAudio(itemToDelete) {
+  const confirmed = confirm("Are you sure you want to delete this audio?");
+
+  if (!confirmed) return;
+
+  audioData = audioData.filter(item => item !== itemToDelete);
+
+  saveAudioDataToStorage();
+  renderFeaturedAudio();
+  renderAudio();
+  updateAudioFilters();
 }
 
     document.getElementById("saveDraftBtn").addEventListener("click", saveDraftAudio);
