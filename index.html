@@ -65,7 +65,7 @@
 
     .sidebar-item.active,
     .sidebar-item:hover {
-      background: #e6f1f4;
+      background: #fff1e8;
       color: #f26a21;
     }
 
@@ -587,23 +587,90 @@
         transform: translateX(-100%);
       }
     }
+    .top-nav {
+  display: none;
+  align-items: center;
+  gap: 18px;
+  font-weight: 800;
+}
 
-    @media (min-width: 900px) {
-      .sidebar {
-        display: block;
-      }
+.top-nav button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 800;
+  color: #111;
+}
 
-      .hamburger-btn,
-      .mobile-tabs {
-        display: none;
-      }
+.top-nav button:hover {
+  color: #f26a21;
+}
 
-      .content {
-        max-width: 1100px;
-        padding-left: 28px;
-        padding-right: 28px;
-      }
-    }
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 28px;
+  left: 0;
+  background: #fff;
+  min-width: 180px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.14);
+  border-radius: 10px;
+  padding: 8px;
+  z-index: 200;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: grid;
+  gap: 4px;
+}
+
+.dropdown-menu button {
+  text-align: left;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.dropdown-menu button:hover {
+  background: #fff1e8;
+}
+@media (min-width: 900px) {
+  .sidebar {
+    display: none;
+  }
+
+  .hamburger-btn,
+  .mobile-tabs {
+    display: none;
+  }
+
+  .content {
+    max-width: 1100px;
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+
+  .top-nav {
+    display: flex;
+  }
+
+  .topbar-row {
+    justify-content: flex-start;
+  }
+
+  .brand {
+    flex: 0;
+    margin-right: 28px;
+  }
+
+  .topbar-right {
+    margin-left: auto;
+  }
+}
+
 
     @media (max-width: 640px) {
       .hero-card h1 {
@@ -646,14 +713,15 @@
 
   <div class="app-shell">
     <aside class="sidebar">
-      <div class="sidebar-brand"><span>CJSF</span> LISTEN</div>
-      <button class="sidebar-item active" id="sideHome" onclick="navigateToSection('home')">Home</button>
-      <button class="sidebar-item" id="sideLive" onclick="navigateToSection('live')">Live</button>
-      <button class="sidebar-item" id="sideAudio" onclick="navigateToSection('audio')">Audio</button>
-      <button class="sidebar-item" id="sideNews" onclick="navigateToSection('news')">News</button>
-      <button class="sidebar-item" id="sideArchive" onclick="navigateToSection('archive')">Archive</button>
-      <button class="sidebar-item" id="sideUpload" onclick="navigateToSection('upload')">Upload</button>
-    </aside>
+  <div class="sidebar-brand"><span>CJSF</span> LISTEN</div>
+
+  <button class="sidebar-item active" id="sideHome" onclick="navigateToSection('home')">Home</button>
+  <button class="sidebar-item" id="sideLive" onclick="navigateToSection('live')">Live</button>
+  <button class="sidebar-item" id="sideAudio" onclick="navigateToSection('audio')">Audio</button>
+  <button class="sidebar-item" id="sideNews" onclick="navigateToSection('news')">News</button>
+  <button class="sidebar-item" id="sideArchive" onclick="navigateToSection('archive')">Archive</button>
+  <button class="sidebar-item" id="sideUpload" onclick="navigateToSection('upload')">Upload</button>
+</aside>
 
     <div class="main-area">
       <div class="news-ticker">
@@ -662,15 +730,40 @@
 
       <div class="topbar">
         <div class="topbar-row">
-          <div class="topbar-left">
-            <button class="hamburger-btn" onclick="openDrawer()">☰</button>
-            <button class="icon-btn">⌕</button>
-          </div>
-          <div class="brand"><span>CJSF</span> LISTEN</div>
-          <div class="topbar-right">
-  <button class="btn btn-light" onclick="logout()">Logout</button>
+  <div class="topbar-left">
+    <button class="hamburger-btn" onclick="openDrawer()">☰</button>
+    <button class="icon-btn">⌕</button>
+  </div>
+
+  <div class="brand"><span>CJSF</span> LISTEN</div>
+
+  <nav class="top-nav">
+    <button onclick="navigateToSection('home')">Home</button>
+
+    <div class="dropdown">
+      <button>News ▾</button>
+      <div class="dropdown-menu">
+        <button onclick="navigateToSection('news')">Community</button>
+        <button onclick="navigateToSection('news')">Culture</button>
+        <button onclick="navigateToSection('news')">Politics</button>
+        <button onclick="navigateToSection('news')">Arts</button>
+        <button onclick="navigateToSection('news')">Music</button>
+        <button onclick="navigateToSection('news')">Sports</button>
+        <button onclick="navigateToSection('news')">Education</button>
+        <button onclick="navigateToSection('news')">Technology</button>
+        <button onclick="navigateToSection('news')">Local</button>
+      </div>
+    </div>
+
+    <button onclick="navigateToSection('audio')">Audio</button>
+    <button onclick="navigateToSection('archive')">Archive</button>
+    <button onclick="navigateToSection('upload')">Upload</button>
+  </nav>
+
+  <div class="topbar-right">
+    <button class="btn btn-light" onclick="logout()">Logout</button>
+  </div>
 </div>
-        </div>
 
         <div class="mobile-tabs">
           <div class="mobile-tab active" id="tabHome" onclick="showSection('home')">Home</div>
