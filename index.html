@@ -1238,59 +1238,8 @@ function loadAudioDataFromStorage() {
     console.error("Failed to load stored audio data:", error);
   }
 }
-    function getFeaturedAudio() {
-  return [...audioData]
-    .sort((a, b) => parseDateString(b.uploadDate) - parseDateString(a.uploadDate))
-    .slice(0, 2);
-}
 
-    function renderFeaturedAudio() {
-      const container = document.getElementById("homeFeaturedContainer");
-      container.innerHTML = "";
-
-       getFeaturedAudio().forEach(item => {
-        const card = document.createElement("div");
-        card.className = "audio-card searchable-item";
-
-        card.innerHTML = `
-          <img src="${item.image}" alt="${item.title}">
-          <div class="audio-card-body">
-            <h3>${item.title}</h3>
-            <p>${item.shortDescription}</p>
-            <div class="tag-row">
-              <span class="tag">${item.topic}</span>
-              <span class="tag">${item.audioType}</span>
-            </div>
-            <div class="meta">
-              Author: ${item.author}<br>
-              Guests: ${item.guests}<br>
-              First Aired On: ${item.show}
-            </div>
-            <div class="btn-row">
-              <button class="btn btn-primary">Open Detail</button>
-            </div>
-          </div>
-        `;
-
-        card.querySelector(".btn-primary").addEventListener("click", () => {
-          openDetail(
-            item.title,
-            item.topic,
-            item.audioType,
-            item.body,
-            item.author,
-            item.guests,
-            item.show,
-            item.firstAirDate,
-            item.uploadDate,
-            item.audio,
-            item.image
-          );
-        });
-
-        container.appendChild(card);
-      });
-    }
+    
 
     function renderAudio() {
       const container = document.getElementById("audioContainer");
@@ -1395,6 +1344,53 @@ function loadAudioDataFromStorage() {
         container.appendChild(card);
       });
     }
+    function renderHomeCategories() {
+  const paContainer = document.getElementById("publicAffairsContainer");
+const artsContainer = document.getElementById("artsContainer");
+
+if (!paContainer || !artsContainer) return;
+
+paContainer.innerHTML = "";
+artsContainer.innerHTML = "";
+  const publicAffairsTopics = ["politics", "local", "public affairs", "sfu", "technology"];
+  const artsTopics = ["music", "arts", "theatre", "film & tv", "visual arts"];
+
+  const sorted = [...audioData].sort(
+    (a, b) => parseDateString(b.uploadDate) - parseDateString(a.uploadDate)
+  );
+
+  const paItems = sorted.filter(item =>
+    publicAffairsTopics.includes(item.topic)
+  ).slice(0, 9);
+
+  const artsItems = sorted.filter(item =>
+    artsTopics.includes(item.topic)
+  ).slice(0, 9);
+
+  function createCard(item) {
+    const card = document.createElement("div");
+   card.className = "audio-card searchable-item";
+    card.innerHTML = `
+      <img src="${item.image}" alt="${item.title}">
+      <div class="audio-card-body">
+        <h3>${item.title}</h3>
+        <p>${item.shortDescription}</p>
+        <div class="btn-row">
+          <button class="btn btn-light">Play</button>
+        </div>
+      </div>
+    `;
+
+    card.querySelector("button").addEventListener("click", () => {
+      playAudio(item.title, item.audio);
+    });
+
+    return card;
+  }
+
+  paItems.forEach(item => paContainer.appendChild(createCard(item)));
+  artsItems.forEach(item => artsContainer.appendChild(createCard(item)));
+}
 
     function renderTicker() {
       const track = document.getElementById("tickerTrack");
@@ -1587,12 +1583,12 @@ function loadAudioDataFromStorage() {
   currentAudioSort = "newest";
   document.getElementById("audioSortSelect").value = "newest";
 
-  saveAudioDataToStorage();
-  renderFeaturedAudio();
-  renderAudio();
-  updateAudioFilters();
-  clearUploadForm();
-  showSection("audio");
+ saveAudioDataToStorage();
+renderAudio();
+renderHomeCategories();
+updateAudioFilters();
+clearUploadForm();
+showSection("audio");
 }
     function deleteAudio(itemToDelete) {
   const confirmed = confirm("Are you sure you want to delete this audio?");
@@ -1602,8 +1598,8 @@ function loadAudioDataFromStorage() {
   audioData = audioData.filter(item => item !== itemToDelete);
 
   saveAudioDataToStorage();
-  renderFeaturedAudio();
-  renderAudio();
+   renderAudio();
+  renderHomeCategories();  
   updateAudioFilters();
 }
 
@@ -1616,10 +1612,12 @@ function loadAudioDataFromStorage() {
     });
 
     loadAudioDataFromStorage();
-renderFeaturedAudio();
+
 renderAudio();
+renderHomeCategories();
 renderNews();
 renderArchive();
+
 renderTicker();
 setActiveNav("home");
   </script>
