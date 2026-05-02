@@ -719,8 +719,6 @@
   <button class="sidebar-item active" id="sideHome" onclick="navigateToSection('home')">Home</button>
   <button class="sidebar-item" id="sideLive" onclick="navigateToSection('live')">Live</button>
   <button class="sidebar-item" id="sideAudio" onclick="navigateToSection('audio')">Audio</button>
-  <button class="sidebar-item" id="sideNews" onclick="navigateToSection('news')">News</button>
-  <button class="sidebar-item" id="sideArchive" onclick="navigateToSection('archive')">Archive</button>
   <button class="sidebar-item" id="sideUpload" onclick="navigateToSection('upload')">Upload</button>
 </aside>
 
@@ -757,7 +755,7 @@
     </div>
 
     <button onclick="navigateToSection('audio')">Audio</button>
-    <button onclick="navigateToSection('archive')">Archive</button>
+  
     <button onclick="navigateToSection('upload')">Upload</button>
   </nav>
 
@@ -1126,13 +1124,11 @@
       if (section === "live") document.getElementById("tabLive")?.classList.add("active");
 
       const sideMap = {
-        home: "sideHome",
-        live: "sideLive",
-        audio: "sideAudio",
-        news: "sideNews",
-        archive: "sideArchive",
-        upload: "sideUpload"
-      };
+  home: "sideHome",
+  live: "sideLive",
+  audio: "sideAudio",
+  upload: "sideUpload"
+};
 
       const drawerMap = {
   home: "drawerHome",
