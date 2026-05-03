@@ -319,7 +319,7 @@
 
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 18px;
     }
 
@@ -853,42 +853,6 @@
 
           <div class="card-grid" id="audioContainer"></div>
         </div>
-
-        <div id="newsSection" class="section">
-          <div class="section-header">
-            <h2>News</h2>
-          </div>
-
-          <div class="search-wrap">
-            <input
-              type="text"
-              class="search-input"
-              placeholder="Search news..."
-              oninput="filterSectionItems('newsSection', this.value)"
-            />
-            <div class="no-results" id="newsSectionNoResults">No matching content found.</div>
-          </div>
-
-          <div id="newsContainer"></div>
-        </div>
-
-        <div id="archiveSection" class="section">
-          <div class="section-header">
-            <h2>Archive</h2>
-          </div>
-
-          <div class="search-wrap">
-            <input
-              type="text"
-              class="search-input"
-              placeholder="Search archive..."
-              oninput="filterSectionItems('archiveSection', this.value)"
-            />
-            <div class="no-results" id="archiveSectionNoResults">No matching content found.</div>
-          </div>
-
-          <div id="archiveContainer"></div>
-        </div>
         <div id="loginSection" class="section">
   <div class="hero-card">
     <h1>Login Required</h1>
@@ -1184,17 +1148,9 @@ image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200
 }
     ];
 
-    const newsData = [
-      { title: "Film Review", description: "A text-based review post with image support for A&E content." },
-      { title: "Campus News Update", description: "A discoverable news post that can sit alongside audio content." },
-      { title: "Community Headlines", description: "Important local and campus updates highlighted in a simple, readable format." }
-    ];
+    
 
-    const archiveData = [
-      { title: "Speak Up!", episode: "April 6 Episode", description: "Local politics discussion", date: "April 6, 2026", audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
-      { title: "Studio 6", episode: "Live Session", description: "Local band performance", date: "April 2, 2026", audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
-      { title: "Boom Bap", episode: "Hip Hop Hour", description: "Underground hip hop showcase", date: "March 30, 2026", audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
-    ];
+    
 
     function setActiveNav(section) {
       document.querySelectorAll(".mobile-tab").forEach(tab => tab.classList.remove("active"));
@@ -1383,46 +1339,9 @@ function loadAudioDataFromStorage() {
       });
     }
 
-    function renderNews() {
-      const container = document.getElementById("newsContainer");
-      container.innerHTML = "";
+  
 
-      newsData.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "list-card searchable-item";
-        card.innerHTML = `
-          <h3>${item.title}</h3>
-          <p>${item.description}</p>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    function renderArchive() {
-      const container = document.getElementById("archiveContainer");
-      container.innerHTML = "";
-
-      archiveData.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "list-card searchable-item";
-
-        card.innerHTML = `
-          <h3>${item.title}</h3>
-          <p><strong>${item.episode}</strong></p>
-          <p>${item.description}</p>
-          <div class="meta">Date: ${item.date}</div>
-          <div class="btn-row" style="margin-top:12px;">
-            <button class="btn btn-light">Play</button>
-          </div>
-        `;
-
-        card.querySelector(".btn-light").addEventListener("click", () => {
-          playAudio(item.title + " - " + item.episode, item.audio);
-        });
-
-        container.appendChild(card);
-      });
-    }
+  
     function showCategoryPage(categoryName, title) {
   currentSection = "category";
 
@@ -1535,13 +1454,15 @@ const artsItems = sorted.filter(item =>
 }
 
     function renderTicker() {
-      const track = document.getElementById("tickerTrack");
-      const tickerHTML = newsData
-        .map(item => `<span class="ticker-item">🔊 ${item.title}</span>`)
-        .join("");
+  const track = document.getElementById("tickerTrack");
 
-      track.innerHTML = tickerHTML + tickerHTML;
-    }
+  track.innerHTML = `
+    <span class="ticker-item">🔊 CJSF 90.1 FM</span>
+    <span class="ticker-item">🎙️ Community Radio</span>
+    <span class="ticker-item">🎧 Arts, Music, News & Public Affairs</span>
+    <span class="ticker-item">📍 Burnaby, British Columbia</span>
+  `;
+}
 
     function setAudioTopic(topic, clicked) {
       currentAudioTopic = topic;
@@ -1771,8 +1692,7 @@ showSection("audio");
 
 renderAudio();
 renderHomeCategories();
-renderNews();
-renderArchive();
+
 
 renderTicker();
 setActiveNav("home");
