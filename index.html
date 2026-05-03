@@ -329,6 +329,9 @@
       overflow: hidden;
       box-shadow: 0 4px 16px rgba(0,0,0,0.08);
     }
+    .feature-card {
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
 
     .audio-card img {
       width: 100%;
@@ -712,7 +715,20 @@
         right: 12px;
         bottom: 12px;
       }
-    }
+       .card-grid {
+
+    grid-template-columns: 1fr;
+
+  }
+
+  .feature-card {
+
+    grid-column: span 1;
+
+  }
+
+}
+    
   </style>
 </head>
 <body>
