@@ -1051,6 +1051,7 @@
         title: "Artist Interview",
         shortDescription: "Interview with a local artist about a new release.",
         body: "A longer description for the interview. This can include more context about the guest, the topic, and why the audio content is being featured.",
+        category: "arts",
         topic: "music",
         audioType: "Interview",
         author: "A&E Team",
@@ -1079,6 +1080,7 @@
         title: "Campus Tech Talk",
         shortDescription: "A segment with searchable topic tagging.",
         body: "This segment focuses on technology topics and demonstrates how topic-based discovery can work inside the web app.",
+        category: "public_affairs",
         topic: "technology",
         audioType: "Segment",
         author: "News Desk",
@@ -1093,6 +1095,7 @@
   title: "SFU Student Voices",
   shortDescription: "Campus perspectives and discussions.",
   body: "Student discussions on campus life and current topics.",
+  category: "public_affairs",
   topic: "public affairs",
   audioType: "Segment",
   author: "CJSF Team",
@@ -1107,6 +1110,8 @@ image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200
   title: "Indie Music Showcase",
   shortDescription: "New underground artists.",
   body: "A showcase of indie and emerging music artists.",
+  title: "Indie Music Showcase",
+  category: "arts",
   topic: "music",
   audioType: "Performance",
   author: "Music Desk",
@@ -1121,6 +1126,7 @@ image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200
         title: "Local Affairs Roundtable",
         shortDescription: "A public affairs discussion categorized by topic.",
         body: "A roundtable discussion focused on local politics and public affairs, included here as a searchable audio post.",
+        category: "public_affairs",
         topic: "politics",
         audioType: "Segment",
         author: "Public Affairs Team",
@@ -1380,20 +1386,19 @@ if (!paContainer || !artsContainer) return;
 
 paContainer.innerHTML = "";
 artsContainer.innerHTML = "";
-  const publicAffairsTopics = ["politics", "local", "public affairs", "sfu", "technology"];
-  const artsTopics = ["music", "arts", "theatre", "film & tv", "visual arts"];
+ 
 
   const sorted = [...audioData].sort(
     (a, b) => parseDateString(b.uploadDate) - parseDateString(a.uploadDate)
   );
 
-  const paItems = sorted.filter(item =>
-    publicAffairsTopics.includes(item.topic)
-  ).slice(0, 9);
+ const paItems = sorted.filter(item =>
+  item.category === "public_affairs"
+).slice(0, 9);
 
-  const artsItems = sorted.filter(item =>
-    artsTopics.includes(item.topic)
-  ).slice(0, 9);
+const artsItems = sorted.filter(item =>
+  item.category === "arts"
+).slice(0, 9);
 
   function createCard(item) {
     const card = document.createElement("div");
