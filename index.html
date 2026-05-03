@@ -1039,7 +1039,7 @@
         <strong>Upload Date:</strong> <span id="detailUploadDate"></span>
       </div>
 
-      <button class="btn btn-primary" onclick="playDetailAudio()">Play Audio</button>
+      <button class="btn btn-primary" id="detailPlayBtn" onclick="playDetailAudio()">Play Audio</button>
     </div>
   </div>
 
@@ -1143,7 +1143,26 @@ image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200
         uploadDate: "April 4, 2026",
         audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
        image: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=1200&auto=format&fit=crop"
-      }
+      },
+      ,
+{
+  title: "Film Review: Local Indie Screening",
+  shortDescription: "A short written review from the CJSF Arts team.",
+  body: "This article reviews a local indie film screening, including the story, performances, and community response.",
+  category: "arts",
+  type: "article",
+  source: "CJSF Arts Team",
+  location: "Burnaby, British Columbia",
+  topic: "film & tv",
+  audioType: "Article",
+  author: "Arts Team",
+  guests: "N/A",
+  show: "Arts & Culture",
+  firstAirDate: "N/A",
+  uploadDate: "2026-05-03",
+  audio: "",
+  image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1200&auto=format&fit=crop"
+}
     ];
 
     const newsData = [
@@ -1455,20 +1474,39 @@ const artsItems = sorted.filter(item =>
   function createCard(item) {
     const card = document.createElement("div");
    card.className = "audio-card searchable-item";
-    card.innerHTML = `
-      <img src="${item.image}" alt="${item.title}">
-      <div class="audio-card-body">
-        <h3>${item.title}</h3>
-        <p>${item.shortDescription}</p>
-        <div class="btn-row">
-          <button class="btn btn-light">Play</button>
-        </div>
-      </div>
-    `;
+   card.innerHTML = `
+  <img src="${item.image}" alt="${item.title}">
+  <div class="audio-card-body">
+    <h3>${item.title}</h3>
+    <p>${item.shortDescription}</p>
 
-    card.querySelector("button").addEventListener("click", () => {
-      playAudio(item.title, item.audio);
-    });
+    <div class="meta">
+      <strong>${item.uploadDate}</strong><br>
+      ${item.author} - ${item.source || "CJSF 90.1 FM"}<br>
+      ${item.location || "Burnaby, British Columbia"}
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary">View</button>
+    </div>
+  </div>
+`;
+
+  card.querySelector("button").addEventListener("click", () => {
+  openDetail(
+    item.title,
+    capitalize(item.topic),
+    item.audioType,
+    item.body,
+    item.author,
+    item.guests,
+    item.show,
+    item.firstAirDate,
+    item.uploadDate,
+    item.audio,
+    item.image
+  );
+});
 
     return card;
   }
@@ -1551,6 +1589,8 @@ const artsItems = sorted.filter(item =>
       document.getElementById("detailUploadDate").innerText = uploadDate;
       document.getElementById("detailImage").src = imageSrc;
       currentDetailAudio = audioSrc;
+      const playBtn = document.getElementById("detailPlayBtn");
+      playBtn.style.display = audioSrc ? "inline-block" : "none";
       document.getElementById("detailModal").classList.add("show");
     }
 
