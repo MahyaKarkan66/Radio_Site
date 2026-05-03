@@ -639,6 +639,25 @@
 .dropdown-menu button:hover {
   background: #fff1e8;
 }
+    .feature-card {
+  grid-column: span 2;
+}
+
+.feature-card img {
+  height: 260px;
+}
+
+.feature-card h3 {
+  font-size: 28px;
+}
+
+.compact-card img {
+  height: 140px;
+}
+
+.compact-card h3 {
+  font-size: 18px;
+}
 @media (min-width: 900px) {
   .sidebar {
     display: none;
@@ -1409,9 +1428,11 @@ const artsItems = sorted.filter(item =>
   item.category === "arts"
 ).slice(0, 9);
 
-  function createCard(item) {
+  function createCard(item, index) {
     const card = document.createElement("div");
-   card.className = "audio-card searchable-item";
+   card.className = index === 0
+  ? "audio-card searchable-item feature-card"
+  : "audio-card searchable-item compact-card";
    card.innerHTML = `
   <img src="${item.image}" alt="${item.title}">
   <div class="audio-card-body">
@@ -1449,8 +1470,8 @@ const artsItems = sorted.filter(item =>
     return card;
   }
 
-  paItems.forEach(item => paContainer.appendChild(createCard(item)));
-  artsItems.forEach(item => artsContainer.appendChild(createCard(item)));
+  paItems.forEach((item, index) => paContainer.appendChild(createCard(item, index)));
+artsItems.forEach((item, index) => artsContainer.appendChild(createCard(item, index)));
 }
 
     function renderTicker() {
