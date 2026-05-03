@@ -740,7 +740,7 @@
     <button onclick="navigateToSection('home')">Home</button>
 
     <div class="dropdown">
-  <button>News & Public Affairs ▾</button>
+  <button onclick="showCategoryPage('public_affairs', 'News & Public Affairs')">News & Public Affairs ▾</button>
   <div class="dropdown-menu">
     <button onclick="navigateToSection('home')">Community</button>
     <button onclick="navigateToSection('home')">Politics</button>
@@ -750,7 +750,7 @@
 </div>
 
 <div class="dropdown">
-  <button>Arts ▾</button>
+  <button onclick="showCategoryPage('arts', 'Arts')">Arts ▾</button>
   <div class="dropdown-menu">
     <button onclick="navigateToSection('home')">Music</button>
     <button onclick="navigateToSection('home')">Theatre</button>
@@ -811,6 +811,13 @@
             </div>
           </div>
         </div>
+        <div id="categorySection" class="section">
+  <div class="section-header">
+    <h2 id="categoryTitle">Category</h2>
+  </div>
+
+  <div class="card-grid" id="categoryContainer"></div>
+</div>
 
         <div id="audioSection" class="section">
           <div class="section-header">
@@ -1378,6 +1385,51 @@ function loadAudioDataFromStorage() {
         container.appendChild(card);
       });
     }
+    function showCategoryPage(categoryName, title) {
+  currentSection = "category";
+
+  document.querySelectorAll(".section").forEach(sectionEl => {
+    sectionEl.classList.remove("active");
+  });
+
+  document.getElementById("categorySection").classList.add("active");
+  document.getElementById("categoryTitle").innerText = title;
+
+  const container = document.getElementById("categoryContainer");
+  container.innerHTML = "";
+
+  const items = [...audioData]
+    .filter(item => item.category === categoryName)
+    .sort((a, b) => parseDateString(b.uploadDate) - parseDateString(a.uploadDate));
+
+  items.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "audio-card";
+
+    card.innerHTML = `
+      <img src="${item.image}" alt="${item.title}">
+      <div class="audio-card-body">
+        <h3>${item.title}</h3>
+        <p>${item.shortDescription}</p>
+        <div class="tag-row">
+          <span class="tag">${capitalize(item.topic)}</span>
+          <span class="tag">${item.audioType}</span>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-light">Play</button>
+        </div>
+      </div>
+    `;
+
+    card.querySelector("button").addEventListener("click", () => {
+      playAudio(item.title, item.audio);
+    });
+
+    container.appendChild(card);
+  });
+
+  closeDrawer();
+}
     function renderHomeCategories() {
   const paContainer = document.getElementById("publicAffairsContainer");
 const artsContainer = document.getElementById("artsContainer");
