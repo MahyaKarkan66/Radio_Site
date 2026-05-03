@@ -1656,11 +1656,22 @@ const artsItems = sorted.filter(item =>
     reader.readAsDataURL(file);
   });
 }
+    function getCategoryFromTopic(topic) {
+  const artsTopics = ["Arts", "Music", "Theatre", "Comedy", "Film & TV", "Visual Arts"];
+
+  if (artsTopics.includes(topic)) {
+    return "arts";
+  }
+
+  return "public_affairs";
+}
+    category: getCategoryFromTopic(topic),
 
     async function saveDraftAudio() {
   const title = document.getElementById("uploadTitle").value.trim();
   const shortDescription = document.getElementById("uploadShortDescription").value.trim();
   const body = document.getElementById("uploadBody").value.trim();
+    
   const author = document.getElementById("uploadAuthor").value.trim();
   const guests = document.getElementById("uploadGuests").value.trim();
   const show = document.getElementById("uploadShow").value.trim();
@@ -1712,6 +1723,7 @@ const artsItems = sorted.filter(item =>
     shortDescription: shortDescription,
     body: body,
     topic: topic.toLowerCase(),
+    category: getCategoryFromTopic(topic),
     audioType: audioType,
     author: author || "Unknown Author",
     guests: guests || "N/A",
