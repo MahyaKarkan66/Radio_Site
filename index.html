@@ -1508,22 +1508,24 @@ function loadAudioDataFromStorage() {
   }
 }
 
-    
-
     function renderAudio() {
-      const container = document.getElementById("audioContainer");
-      container.innerHTML = "";
+  const container = document.getElementById("audioContainer");
+  container.innerHTML = "";
 
-      const sortedAudio = [...audioData].sort((a, b) => {
-        const dateA = parseDateString(a.uploadDate);
-        const dateB = parseDateString(b.uploadDate);
+  const sortedAudio = audioData
+    .filter(item => item.type === "audio")
+    .sort((a, b) => {
+      const dateA = parseDateString(a.uploadDate);
+      const dateB = parseDateString(b.uploadDate);
 
-        if (currentAudioSort === "newest") {
-          return dateB - dateA;
-        } else {
-          return dateA - dateB;
-        }
-      });
+      if (currentAudioSort === "newest") {
+        return dateB - dateA;
+      } else {
+        return dateA - dateB;
+      }
+    });
+
+    
 
       sortedAudio.forEach(item => {
         const card = document.createElement("div");
