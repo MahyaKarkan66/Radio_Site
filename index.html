@@ -2138,9 +2138,10 @@ function clearProfile() {
         day: "numeric"
       });
 
-  const audioUrl = audioFile
-    ? await fileToDataURL(audioFile)
-    : "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+  const audioUrl =
+  contentType === "audio"
+    ? (audioFile ? await fileToDataURL(audioFile
+    : "";
 
   const imageUrl = imageFile
     ? await fileToDataURL(imageFile)
@@ -2152,7 +2153,7 @@ function clearProfile() {
     body: body,
     topic: topic.toLowerCase(),
     category: getCategoryFromTopic(topic),
-    audioType: audioType,
+    audioType: contentType === "article" ? "Article" : audioType,
     type: contentType,
     author: author || "Unknown Author",
     guests: guests || "N/A",
