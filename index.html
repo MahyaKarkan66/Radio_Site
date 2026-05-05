@@ -745,6 +745,7 @@
 <button class="drawer-item" id="drawerLive" onclick="navigateToSection('live')">Live</button>
 <button class="drawer-item" id="drawerAudio" onclick="navigateToSection('audio')">Audio</button>
     <button class="drawer-item" id="drawerUpload" onclick="navigateToSection('upload')">Upload</button>
+    <button class="drawer-item" id="drawerProfile" onclick="navigateToSection('profile')">Profile</button>
   </div>
 
   <div class="app-shell">
@@ -755,6 +756,7 @@
   <button class="sidebar-item" id="sideLive" onclick="navigateToSection('live')">Live</button>
   <button class="sidebar-item" id="sideAudio" onclick="navigateToSection('audio')">Audio</button>
   <button class="sidebar-item" id="sideUpload" onclick="navigateToSection('upload')">Upload</button>
+  <button class="sidebar-item" id="sideProfile" onclick="navigateToSection('profile')">Profile</button>
 </aside>
 
     <div class="main-area">
@@ -797,6 +799,7 @@
     <button onclick="navigateToSection('audio')">Audio</button>
     <button onclick="navigateToSection('live')">Live</button>
     <button onclick="navigateToSection('upload')">Upload</button>
+    <button onclick="navigateToSection('profile')">Profile</button>
    
   </nav>
 
@@ -912,7 +915,68 @@
     </div>
   </div>
 </div>
+<div id="profileSection" class="section">
+  <div class="hero-card">
+    <h1>User Profile</h1>
+    <p>Create a simple profile for CJSF contributors, DJs, and hosts.</p>
+  </div>
 
+  <div class="upload-box">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="profileName">Name</label>
+        <input id="profileName" type="text" placeholder="Enter name" />
+      </div>
+
+      <div class="form-group">
+        <label for="profileDjName">DJ Name</label>
+        <input id="profileDjName" type="text" placeholder="Enter DJ name" />
+      </div>
+
+      <div class="form-group">
+        <label for="profileBio">Bio</label>
+        <textarea id="profileBio" placeholder="Write a short bio"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="profilePicture">Picture</label>
+        <input id="profilePicture" type="file" accept="image/*" />
+      </div>
+
+      <div class="form-group">
+        <label for="profileInstagram">Instagram</label>
+        <input id="profileInstagram" type="text" placeholder="@username" />
+      </div>
+
+      <div class="form-group">
+        <label for="profileTikTok">TikTok</label>
+        <input id="profileTikTok" type="text" placeholder="@username" />
+      </div>
+
+      <div class="form-group">
+        <label for="profileX">X</label>
+        <input id="profileX" type="text" placeholder="@username" />
+      </div>
+
+      <div class="form-group">
+        <label for="profileEmail">Email</label>
+        <input id="profileEmail" type="email" placeholder="email@example.com" />
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" type="button" onclick="saveProfile()">Save Profile</button>
+        <button class="btn btn-light" type="button" onclick="clearProfile()">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-card" id="profilePreview" style="margin-top: 24px; display: none;">
+    <h1 id="previewDjName">DJ Name</h1>
+    <p id="previewName"></p>
+    <p id="previewBio"></p>
+    <div class="meta" id="previewSocials"></div>
+  </div>
+</div>
         <div id="uploadSection" class="section">
           <div class="hero-card">
             <h1>Upload Audio</h1>
@@ -1834,6 +1898,90 @@ artsItems.forEach((item, index) => artsContainer.appendChild(createCard(item, in
       playAudio(document.getElementById("detailTitle").innerText, currentDetailAudio);
       closeDetail();
     }
+    const PROFILE_STORAGE_KEY = "cjsf_user_profile";
+
+function renderProfilePreview(profile) {
+  const preview = document.getElementById("profilePreview");
+  const previewDjName = document.getElementById("previewDjName");
+  const previewName = document.getElementById("previewName");
+  const previewBio = document.getElementById("previewBio");
+  const previewSocials = document.getElementById("previewSocials");
+
+  if (!profile) {
+    preview.style.display = "none";
+    return;
+  }
+
+  preview.style.display = "block";
+  previewDjName.innerText = profile.djName || "DJ Name";
+  previewName.innerText = profile.name ? "Name: " + profile.name : "";
+  previewBio.innerText = profile.bio || "";
+
+  previewSocials.innerHTML = `
+    ${profile.instagram ? "<strong>Instagram:</strong> " + profile.instagram + "<br>" : ""}
+    ${profile.tiktok ? "<strong>TikTok:</strong> " + profile.tiktok + "<br>" : ""}
+    ${profile.x ? "<strong>X:</strong> " + profile.x + "<br>" : ""}
+    ${profile.email ? "<strong>Email:</strong> " + profile.email : ""}
+  `;
+}
+
+function loadProfile() {
+  const storedProfile = localStorage.getItem(PROFILE_STORAGE_KEY);
+
+  if (!storedProfile) return;
+
+  try {
+    const profile = JSON.parse(storedProfile);
+
+    document.getElementById("profileName").value = profile.name || "";
+    document.getElementById("profileDjName").value = profile.djName || "";
+    document.getElementById("profileBio").value = profile.bio || "";
+    document.getElementById("profileInstagram").value = profile.instagram || "";
+    document.getElementById("profileTikTok").value = profile.tiktok || "";
+    document.getElementById("profileX").value = profile.x || "";
+    document.getElementById("profileEmail").value = profile.email || "";
+
+    renderProfilePreview(profile);
+  } catch (error) {
+    console.error("Failed to load profile:", error);
+  }
+}
+
+async function saveProfile() {
+  const pictureFile = document.getElementById("profilePicture").files[0];
+
+  const picture = pictureFile ? await fileToDataURL(pictureFile) : "";
+
+  const profile = {
+    name: document.getElementById("profileName").value.trim(),
+    djName: document.getElementById("profileDjName").value.trim(),
+    bio: document.getElementById("profileBio").value.trim(),
+    picture: picture,
+    instagram: document.getElementById("profileInstagram").value.trim(),
+    tiktok: document.getElementById("profileTikTok").value.trim(),
+    x: document.getElementById("profileX").value.trim(),
+    email: document.getElementById("profileEmail").value.trim()
+  };
+
+  localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(profile));
+  renderProfilePreview(profile);
+  alert("Profile saved successfully.");
+}
+
+function clearProfile() {
+  localStorage.removeItem(PROFILE_STORAGE_KEY);
+
+  document.getElementById("profileName").value = "";
+  document.getElementById("profileDjName").value = "";
+  document.getElementById("profileBio").value = "";
+  document.getElementById("profilePicture").value = "";
+  document.getElementById("profileInstagram").value = "";
+  document.getElementById("profileTikTok").value = "";
+  document.getElementById("profileX").value = "";
+  document.getElementById("profileEmail").value = "";
+
+  renderProfilePreview(null);
+}
 
     function clearUploadForm() {
       document.getElementById("uploadTitle").value = "";
@@ -1973,12 +2121,10 @@ showSection("audio");
       updateAudioFilters();
     });
 
-    loadAudioDataFromStorage();
-
+loadAudioDataFromStorage();
+loadProfile();
 renderAudio();
 renderHomeCategories();
-
-
 renderTicker();
 setActiveNav("home");
   </script>
