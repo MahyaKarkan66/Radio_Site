@@ -915,6 +915,31 @@
     </div>
   </div>
 </div>
+        <div id="userLoginSection" class="section">
+  <div class="hero-card">
+    <h1>User Login</h1>
+    <p>Please log in or register to create your profile.</p>
+  </div>
+
+  <div class="upload-box">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="userLoginName">Username</label>
+        <input id="userLoginName" type="text" placeholder="Enter username" />
+      </div>
+
+      <div class="form-group">
+        <label for="userLoginPass">Password</label>
+        <input id="userLoginPass" type="password" placeholder="Enter password" />
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" type="button" onclick="userLogin()">Login</button>
+        <button class="btn btn-light" type="button" onclick="showUserRegister()">Register</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div id="profileSection" class="section">
   <div class="hero-card">
     <h1>User Profile</h1>
@@ -2121,6 +2146,28 @@ showSection("audio");
    renderAudio();
   renderHomeCategories();  
   updateAudioFilters();
+}
+    function userLogin() {
+  const username = document.getElementById("userLoginName").value.trim();
+  const password = document.getElementById("userLoginPass").value.trim();
+
+  const storedUser = localStorage.getItem(USER_STORAGE_KEY);
+
+  if (!storedUser) {
+    alert("No user found. Please register first.");
+    return;
+  }
+
+  const user = JSON.parse(storedUser);
+
+  if (user.username === username && user.password === password) {
+    localStorage.setItem("cjsf_user_logged_in", "true");
+    isUserLoggedIn = true;
+    alert("User logged in successfully");
+    showSection("profile");
+  } else {
+    alert("Invalid username or password");
+  }
 }
 
     document.getElementById("saveDraftBtn").addEventListener("click", saveDraftAudio);
