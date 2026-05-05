@@ -774,23 +774,23 @@
   <nav class="top-nav">
     <button onclick="navigateToSection('home')">Home</button>
 
-    <div class="dropdown">
+   <div class="dropdown">
   <button onclick="showCategoryPage('public_affairs', 'News & Public Affairs')">News & Public Affairs ▾</button>
   <div class="dropdown-menu">
-    <button onclick="navigateToSection('home')">Community</button>
-    <button onclick="navigateToSection('home')">Politics</button>
-    <button onclick="navigateToSection('home')">Local</button>
-    <button onclick="navigateToSection('home')">SFU</button>
+    <button onclick="showTopicPage('public_affairs', 'public affairs', 'Community')">Community</button>
+    <button onclick="showTopicPage('public_affairs', 'politics', 'Politics')">Politics</button>
+    <button onclick="showTopicPage('public_affairs', 'local', 'Local')">Local</button>
+    <button onclick="showTopicPage('public_affairs', 'sfu', 'SFU')">SFU</button>
   </div>
 </div>
 
 <div class="dropdown">
   <button onclick="showCategoryPage('arts', 'Arts')">Arts ▾</button>
   <div class="dropdown-menu">
-    <button onclick="navigateToSection('home')">Music</button>
-    <button onclick="navigateToSection('home')">Theatre</button>
-    <button onclick="navigateToSection('home')">Film & TV</button>
-    <button onclick="navigateToSection('home')">Visual Arts</button>
+    <button onclick="showTopicPage('arts', 'music', 'Music')">Music</button>
+    <button onclick="showTopicPage('arts', 'theatre', 'Theatre')">Theatre</button>
+    <button onclick="showTopicPage('arts', 'film & tv', 'Film & TV')">Film & TV</button>
+    <button onclick="showTopicPage('arts', 'visual arts', 'Visual Arts')">Visual Arts</button>
   </div>
 </div>
 
@@ -1577,27 +1577,24 @@ function loadAudioDataFromStorage() {
 
   
 
-  
-    function showCategoryPage(categoryName, title) {
-  currentSection = "category";
-
-  document.querySelectorAll(".section").forEach(sectionEl => {
-    sectionEl.classList.remove("active");
-  });
-
-  document.getElementById("categorySection").classList.add("active");
-  document.getElementById("categoryTitle").innerText = title;
-
-  const container = document.getElementById("categoryContainer");
+  function renderCategoryCards(items, container) {
   container.innerHTML = "";
 
-  const items = [...audioData]
-    .filter(item => item.category === categoryName)
-    .sort((a, b) => parseDateString(b.uploadDate) - parseDateString(a.uploadDate));
+  if (items.length === 0) {
+    container.innerHTML = `
+      <div class="list-card">
+        <h3>No content found</h3>
+        <p>There are no items in this category yet.</p>
+      </div>
+    `;
+    return;
+  }
 
   items.forEach(item => {
     const card = document.createElement("div");
     card.className = "audio-card";
+
+    const buttonLabel = item.type === "article" ? "View" : "Play";
 
     card.innerHTML = `
       <img src="${item.image}" alt="${item.title}">
@@ -1609,18 +1606,68 @@ function loadAudioDataFromStorage() {
           <span class="tag">${item.audioType}</span>
         </div>
         <div class="btn-row">
-          <button class="btn btn-light">Play</button>
+          <button class="btn btn-primary">${buttonLabel}</button>
         </div>
       </div>
     `;
 
     card.querySelector("button").addEventListener("click", () => {
-      playAudio(item.title, item.audio);
+      openDetail(
+        item.title,
+        capitalize(item.topic),
+        item.audioType,
+        item.body,
+        item.author,
+        item.guests,
+        item.show,
+        item.firstAirDate,
+        item.uploadDate,
+        item.audio,
+        item.image
+      );
     });
 
     container.appendChild(card);
   });
+}
 
+function showCategoryPage(categoryName, title) {
+  currentSection = "category";
+
+  document.querySelectorAll(".section").forEach(sectionEl => {
+    sectionEl.classList.remove("active");
+  });
+
+  document.getElementById("categorySection").classList.add("active");
+  document.getElementById("categoryTitle").innerText = title;
+
+  const container = document.getElementById("categoryContainer");
+
+  const items = [...audioData]
+    .filter(item => item.category === categoryName)
+    .sort((a, b) => parseDateString(b.uploadDate) - parseDateString(a.uploadDate));
+
+  renderCategoryCards(items, container);
+  closeDrawer();
+}
+
+function showTopicPage(categoryName, topicName, title) {
+  currentSection = "category";
+
+  document.querySelectorAll(".section").forEach(sectionEl => {
+    sectionEl.classList.remove("active");
+  });
+
+  document.getElementById("categorySection").classList.add("active");
+  document.getElementById("categoryTitle").innerText = title;
+
+  const container = document.getElementById("categoryContainer");
+
+  const items = [...audioData]
+    .filter(item => item.category === categoryName && item.topic === topicName)
+    .sort((a, b) => parseDateString(b.uploadDate) - parseDateString(a.uploadDate));
+
+  renderCategoryCards(items, container);
   closeDrawer();
 }
     function renderHomeCategories() {
