@@ -1112,7 +1112,13 @@
     let currentSection = "home";
     let currentAudioSort = "newest";
     const AUDIO_STORAGE_KEY = "cjsf_audio_data";
-    let isLoggedIn = localStorage.getItem("cjsf_logged_in") === "true";
+
+    /* Admin login just for Upload */
+    let isAdminLoggedIn = localStorage.getItem("cjsf_admin_logged_in") === "true";
+
+    /* User login for Profile */
+    const USER_STORAGE_KEY = "cjsf_registered_user";
+     let isUserLoggedIn = localStorage.getItem("cjsf_user_logged_in") === "true";
 
     
 
@@ -1477,9 +1483,13 @@ image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200
     }
 
     function showSection(section) {
-  if (section === "upload" && !isLoggedIn) {
-    section = "login";
-  }
+if (section === "upload" && !isAdminLoggedIn) {
+  section = "login";
+}
+
+if (section === "profile" && !isUserLoggedIn) {
+  section = "userLogin";
+}
 
   currentSection = section;
       document.querySelectorAll(".section").forEach(sectionEl => {
