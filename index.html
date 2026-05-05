@@ -1107,7 +1107,13 @@
                   <option>Technology</option>
                 </select>
               </div>
-
+              <div class="form-group">
+  <label for="uploadContentType">Content Type</label>
+  <select id="uploadContentType">
+    <option value="audio">Audio</option>
+    <option value="article">Article</option>
+  </select>
+</div>
               <div class="form-group">
                 <label for="uploadAudioType">Audio Type</label>
                 <select id="uploadAudioType">
@@ -2102,6 +2108,7 @@ function clearProfile() {
 
   const topic = document.getElementById("uploadTopic").value;
   const audioType = document.getElementById("uploadAudioType").value;
+  const contentType = document.getElementById("uploadContentType").value;
 
   const audioFile = document.getElementById("uploadAudioFile").files[0];
   const imageFile = document.getElementById("uploadImage").files[0];
@@ -2146,6 +2153,7 @@ function clearProfile() {
     topic: topic.toLowerCase(),
     category: getCategoryFromTopic(topic),
     audioType: audioType,
+    type: contentType,
     author: author || "Unknown Author",
     guests: guests || "N/A",
     show: show || "Unknown Show",
