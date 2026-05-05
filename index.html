@@ -2140,12 +2140,14 @@ function clearProfile() {
 
   const audioUrl =
   contentType === "audio"
-    ? (audioFile ? await fileToDataURL(audioFile
+    ? (audioFile
+        ? await fileToDataURL(audioFile)
+        : "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")
     : "";
 
-  const imageUrl = imageFile
-    ? await fileToDataURL(imageFile)
-    : "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1200&auto=format&fit=crop";
+const imageUrl = imageFile
+  ? await fileToDataURL(imageFile)
+  : "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1200&auto=format&fit=crop";
 
   const newAudioItem = {
     title: title,
