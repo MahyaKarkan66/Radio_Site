@@ -1573,8 +1573,9 @@ if (section === "profile" && !isUserLoggedIn) {
   const pass = document.getElementById("loginPass").value.trim();
 
   if (user === "admin" && pass === "1234") {
-    localStorage.setItem("cjsf_logged_in", "true");
-    isLoggedIn = true;
+    localStorage.setItem("cjsf_admin_logged_in", "true");
+    isAdminLoggedIn = true;
+
     alert("Logged in successfully.");
     showSection("upload");
   } else {
@@ -1583,8 +1584,12 @@ if (section === "profile" && !isUserLoggedIn) {
 }
 
 function logout() {
-  localStorage.removeItem("cjsf_logged_in");
-  isLoggedIn = false;
+  localStorage.removeItem("cjsf_admin_logged_in");
+  localStorage.removeItem("cjsf_user_logged_in");
+
+  isAdminLoggedIn = false;
+  isUserLoggedIn = false;
+
   showSection("home");
 }
 
