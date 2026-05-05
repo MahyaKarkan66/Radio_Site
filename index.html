@@ -799,13 +799,12 @@
     <button onclick="navigateToSection('audio')">Audio</button>
     <button onclick="navigateToSection('live')">Live</button>
     <button onclick="navigateToSection('upload')">Upload</button>
-    <button onclick="navigateToSection('profile')">Profile</button>
+    <div id="userMenu"></div>
+   
    
   </nav>
 
-  <div class="topbar-right">
-    <button class="btn btn-light" onclick="logout()">Logout</button>
-  </div>
+ 
 </div>
 
         <div class="mobile-tabs">
@@ -1030,10 +1029,11 @@
   </div>
 </div>
         <div id="uploadSection" class="section">
-          <div class="hero-card">
-            <h1>Upload Audio</h1>
-            <p>Add audio content with metadata, categories, and show information.</p>
-          </div>
+  <div class="hero-card">
+    <h1>Upload Audio</h1>
+    <p>Add audio content with metadata, categories, and show information.</p>
+    <button class="btn btn-light" type="button" onclick="adminLogout()">Admin Logout</button>
+  </div>
 
           <div class="upload-box">
             <div class="form-grid">
@@ -1590,12 +1590,18 @@ if (section === "profile" && !isUserLoggedIn) {
 }
 
 function logout() {
-  localStorage.removeItem("cjsf_admin_logged_in");
   localStorage.removeItem("cjsf_user_logged_in");
 
-  isAdminLoggedIn = false;
   isUserLoggedIn = false;
 
+  renderUserMenu();
+  showSection("home");
+}
+    function adminLogout() {
+  localStorage.removeItem("cjsf_admin_logged_in");
+  isAdminLoggedIn = false;
+
+  alert("Admin logged out.");
   showSection("home");
 }
 
@@ -1711,7 +1717,22 @@ function loadAudioDataFromStorage() {
         container.appendChild(card);
       });
     }
+function renderUserMenu() {
+  const menu = document.getElementById("userMenu");
 
+  if (!menu) return;
+
+  if (isUserLoggedIn) {
+    menu.innerHTML = `
+      <button onclick="navigateToSection('profile')">Profile</button>
+      <button onclick="logout()">Logout</button>
+    `;
+  } else {
+    menu.innerHTML = `
+      <button onclick="navigateToSection('userLogin')">Login</button>
+    `;
+  }
+}
   
 
   function renderCategoryCards(items, container) {
@@ -2205,7 +2226,9 @@ showSection("audio");
 
   if (user.username === username && user.password === password) {
     localStorage.setItem("cjsf_user_logged_in", "true");
+    localStorage.setItem("cjsf_current_user", username);
     isUserLoggedIn = true;
+    renderUserMenu();
     alert("User logged in successfully");
     showSection("profile");
   } else {
@@ -2253,6 +2276,7 @@ renderAudio();
 renderHomeCategories();
 renderTicker();
 setActiveNav("home");
+renderUserMenu();
   </script>
 </body>
 </html>
