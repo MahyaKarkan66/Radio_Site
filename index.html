@@ -769,6 +769,7 @@
   <div class="topbar-left">
     <button class="hamburger-btn" onclick="openDrawer()">☰</button>
     <button class="icon-btn">⌕</button>
+    <div id="userMenu"></div>
   </div>
 
   <div class="brand"><span>CJSF</span> LISTEN</div>
@@ -799,7 +800,7 @@
     <button onclick="navigateToSection('audio')">Audio</button>
     <button onclick="navigateToSection('live')">Live</button>
     <button onclick="navigateToSection('upload')">Upload</button>
-    <div id="userMenu"></div>
+    
    
    
   </nav>
@@ -1724,12 +1725,13 @@ function renderUserMenu() {
 
   if (isUserLoggedIn) {
     menu.innerHTML = `
-      <button onclick="navigateToSection('profile')">Profile</button>
-      <button onclick="logout()">Logout</button>
+      <button class="btn btn-light" onclick="navigateToSection('profile')">Profile</button>
+      <button class="btn btn-light" onclick="logout()">Logout</button>
     `;
   } else {
     menu.innerHTML = `
-      <button onclick="navigateToSection('userLogin')">Login</button>
+      <button class="btn btn-light" onclick="navigateToSection('userLogin')">Login</button>
+      <button class="btn btn-light" onclick="showUserRegister()">Register</button>
     `;
   }
 }
