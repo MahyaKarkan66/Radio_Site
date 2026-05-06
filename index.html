@@ -2261,7 +2261,7 @@ function registerUser() {
   localStorage.setItem("cjsf_user_logged_in", "true");
 
   isUserLoggedIn = true;
-
+  renderUserMenu();
   alert("Account created");
   showSection("profile");
 }
