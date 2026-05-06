@@ -728,7 +728,10 @@
   }
 
 }
-    #liveSection {
+#liveSection {
+  min-height: 100vh;
+  padding: 40px 20px;
+
   background-image: 
     linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
     url("images/liveback.png");
@@ -736,6 +739,11 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+#liveSection > div {
+  background: rgba(255, 255, 255, 0.88);
+  border-radius: 18px;
 }
     
   </style>
